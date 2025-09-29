@@ -1,108 +1,139 @@
 # Product Finder
 
-A command-line tool built with TypeScript and Hyperbrowser to search for products, extract their information, find similar products, and track them over time.
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
+
+A powerful command-line tool built with TypeScript and Hyperbrowser SDK to search for products, extract their information, find similar products, and track them over time.
+
+## Why Hyperbrowser?
+
+[Hyperbrowser](https://hyperbrowser.ai) is the **Internet for AI** — purpose-built for developers creating AI agents and automating web tasks. Skip the infrastructure headaches and focus on building.
 
 ## Features
 
-- **Product Search**: Extract detailed information from any product URL
-- **Similar Products**: Find similar products from Google Shopping 
-- **Data Tracking**: Save product details to easily track price changes
-- **Automatic Refresh**: Schedule updates to keep your product data current
-- **User-Friendly Interface**: Progress indicators and clear formatted output
-- **OpenAI Integration**: Use OpenAI to sort products by similarity
+- **Product Search**: Extract detailed information from any product URL using Hyperbrowser's Extract API
+- **Similar Products**: Find similar products from Bing Shopping automatically
+- **Data Tracking**: Save product details to easily track price changes over time
+- **Automatic Refresh**: Schedule updates with cron jobs to keep your product data current
+- **User-Friendly Interface**: Progress indicators with `ora` and clear formatted output
+- **OpenAI Integration**: Optional AI-powered product similarity sorting
+
+## Quick Start
+
+1. **Get your API key**: https://hyperbrowser.ai
+2. **Install**: `npm install`
+3. **Configure**: Add `HYPERBROWSER_API_KEY` to `.env` (and optionally `OPENAI_API_KEY`)
+4. **Build**: `npm run build`
+5. **Run**: `npm run search -- --url "https://example.com/product"`
 
 ## Requirements
 
 - Node.js 18 or higher
-- Hyperbrowser API key (get one at [hyperbrowser.io](https://hyperbrowser.io))
+- Hyperbrowser API key (get one at [hyperbrowser.ai](https://hyperbrowser.ai))
+- OpenAI API key (optional, for AI-powered similarity sorting)
 - Linux/macOS for the scheduling feature (uses crontab)
 
 ## Installation
 
-1. Clone this repository or download the source code
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` file in the project root with your API key:
-   ```
-   HYPERBROWSER_API_KEY=your_api_key_here
-   OPENAI_API_KEY=your_openai_api_key_here # Optional, only needed for similarity sorting
-   ```
-4. Build the project:
-   ```bash
-   npm run build
-   ```
+```bash
+# Install dependencies
+npm install
+
+# Create .env file with your API keys
+echo "HYPERBROWSER_API_KEY=your_hyperbrowser_api_key" > .env
+echo "OPENAI_API_KEY=your_openai_api_key" >> .env  # Optional
+
+# Build the project
+npm run build
+```
 
 ## Usage
 
-### Search for a Product
+### 1. Search for a Product
 
 Extract information about a product and find similar items:
 
 ```bash
-npm run search -- --url "https://example.com/product/123"
+npm run search -- --url "https://www.amazon.com/dp/B08N5WRWNW"
 ```
 
-Options:
+This will:
+- Extract product details (name, brand, description, price) using Hyperbrowser
+- Search for similar products on Bing Shopping
+- Sort results by similarity (if OpenAI API key is provided)
+- Save results to `saved_products.json`
+
+**Options:**
 - `--url, -u`: Product URL (required)
 - `--output, -o`: Custom output file path (optional, defaults to `saved_products.json`)
 
-### Refresh Product Data
+### 2. Refresh Product Data
 
 Update the similar products for all items in your saved data:
 
 ```bash
-npm run refresh -- --file "./my-products.json"
+npm run refresh -- --file "./saved_products.json"
 ```
 
-Or use the default file location:
-```bash
-npm run refresh:default
-```
-
-Options:
+**Options:**
 - `--file, -f`: Path to the saved product data file (optional, defaults to `saved_products.json`)
 
 ## Advanced Usage
 
-### Schedule Automatic Updates
+### 3. Schedule Automatic Updates
 
-Set up a cron job to run the refresh operation periodically:
+Set up a cron job to automatically refresh product data:
 
 ```bash
-npm run schedule -- --interval "0 */6 * * *" --file "./my-products.json"
+# Custom schedule (every 6 hours)
+npm run schedule -- --interval "0 */6 * * *" --file "./saved_products.json"
+
+# Daily at midnight (default)
+npm run schedule -- --file "./saved_products.json"
 ```
 
-Or use one of the preset scheduling options:
+This creates a shell script and adds it to your crontab. Logs are saved to `scheduled-run.log`.
+
+**Options:**
+- `--interval, -i`: Cron schedule expression (default: `0 0 * * *` - daily at midnight)
+- `--file, -f`: Path to the saved product file (default: `saved_products.json`)
+
+**Common cron patterns:**
+- `0 */6 * * *` - Every 6 hours
+- `0 0 * * *` - Daily at midnight
+- `0 */1 * * *` - Every hour
+- `0 0 * * 0` - Weekly on Sunday
+
+### 4. Remove Scheduled Updates
+
 ```bash
-npm run schedule:daily    # Run once a day at midnight
-npm run schedule:hourly   # Run every hour
-npm run schedule:weekly   # Run once a week on Sunday
-```
-
-Options:
-- `--interval, -i`: Cron schedule expression (optional, defaults to daily at midnight)
-- `--file, -f`: Path to the saved product file (optional, defaults to `saved_products.json`)
-
-### Remove Scheduled Updates
-
-Remove the cron job when you no longer need automatic updates:
-
-```bash
+# Remove from crontab, keep script file
 npm run unschedule
+
+# Remove from crontab and delete script file
+npm run unschedule -- --delete-script
 ```
 
-Or remove the job and delete the script file:
-```bash
-npm run unschedule:clean
+
+## How It Works
+
+1. **Product Extraction**: Uses Hyperbrowser's Extract API to scrape product details from any product page
+2. **Similar Product Search**: Automatically searches Bing Shopping for similar products based on product name
+3. **AI Sorting** (optional): Uses OpenAI GPT-4o-mini to rank products by similarity to the original
+4. **Data Persistence**: Saves results to JSON file with timestamps for tracking
+5. **Scheduled Updates**: Creates shell scripts and cron jobs for automatic refreshing
+
+## Code Structure
+
+```
+src/
+├── index.ts        # CLI entrypoint with Commander.js
+├── product.ts      # Product search and refresh logic
+├── scheduler.ts    # Cron job management
+├── display.ts      # Console output formatting
+└── types.ts        # Zod schemas and TypeScript types
 ```
 
-Options:
-- `--delete-script, -d`: Also delete the script file (optional, defaults to `false`)
-
-
-## Data Structure
+## Data Format
 
 The tool stores data in JSON format with the following structure:
 
@@ -121,14 +152,33 @@ The tool stores data in JSON format with the following structure:
         "brand": "Other Brand",
         "description": "Another great product...",
         "price": 89.99,
-        "link": "https://example.com/similar1",
+        "linkToProduct": "https://example.com/similar1",
         "onSale": true,
         "salePrice": 79.99
       }
-      // More similar products...
     ],
     "lastUpdated": "2023-11-15T12:34:56.789Z"
   }
-  // More products...
 }
 ```
+
+## Technologies Used
+
+- **[@hyperbrowser/sdk](https://www.npmjs.com/package/@hyperbrowser/sdk)** - Web scraping and data extraction
+- **OpenAI GPT-4o-mini** - AI-powered similarity ranking
+- **Commander.js** - CLI argument parsing
+- **Zod** - Schema validation
+- **Ora** - Terminal spinners and progress indicators
+- **TypeScript** - Type-safe development
+
+## Use Cases
+
+- **Price Monitoring**: Track price changes for products you're interested in
+- **Comparison Shopping**: Find and compare similar products across retailers
+- **Market Research**: Analyze product offerings and pricing in a category
+- **Deal Finding**: Monitor for sales and price drops on similar items
+- **Product Discovery**: Discover alternatives to products you're researching
+
+---
+
+Follow [@hyperbrowser](https://x.com/hyperbrowser) for updates.

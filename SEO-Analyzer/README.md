@@ -1,179 +1,272 @@
-# SEO Analyzer Tool 🔍
+# SEO Analyzer
 
-A powerful SEO analysis tool that uses AI to analyze websites and provide actionable recommendations for improving search engine optimization.
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
 
-## Features ✨
+An intelligent SEO analysis tool that uses AI-powered web extraction to analyze websites and provide actionable recommendations for improving search engine optimization.
 
-- **Comprehensive SEO Analysis**: Analyzes title tags, meta descriptions, headings, content, images, links, and technical SEO factors
-- **AI-Powered Insights**: Uses OpenAI's GPT-4 to provide intelligent recommendations
-- **Severity Classification**: Issues are categorized as Critical, High, Medium, or Low priority
-- **Quick Wins**: Identifies easy improvements for immediate impact
-- **Detailed Reports**: Generates JSON reports with timestamps for tracking improvements
-- **Web Scraping**: Uses Hyperbrowser to extract webpage content and structure
+## Features
 
-## Prerequisites 📋
+- 🔍 **Comprehensive SEO Analysis**: Analyzes title tags, meta descriptions, headings, content, images, links, and technical SEO factors
+- 🤖 **AI-Powered Insights**: Uses Hyperbrowser's advanced extraction with structured schema validation
+- 📊 **Severity Classification**: Issues categorized as Critical, High, Medium, or Low priority
+- ⚡ **Quick Wins**: Identifies easy improvements for immediate impact
+- 🎨 **Interactive CLI**: Beautiful command-line interface with colored output
+- 🔐 **Type-Safe**: Built with TypeScript and Zod schema validation
 
-1. **Node.js** (v16 or higher)
-2. **API Keys**:
-   - [Hyperbrowser API Key](https://hyprbrowser.ai) - for web scraping
-   - [OpenAI API Key](https://platform.openai.com) - for AI analysis
+## What It Does
 
-## Setup 🛠️
+This tool allows you to perform comprehensive SEO audits on any website by:
 
-1. **Install dependencies**:
+1. Taking a website URL as input via interactive prompt
+2. Extracting and analyzing page content, structure, and metadata
+3. Using AI to identify SEO issues and opportunities
+4. Presenting findings in a clear, organized format with severity levels
+
+Perfect for:
+
+- SEO audits and optimization
+- Website performance monitoring
+- Content optimization
+- Technical SEO analysis
+- Competitive SEO research
+
+## Get an API Key
+
+Get your Hyperbrowser API key at **[https://hyperbrowser.ai](https://hyperbrowser.ai)**
+
+## Quick Start
+
 ```bash
+# Install dependencies
 npm install
+
+# Set up environment variables
+export HYPERBROWSER_API_KEY="your_api_key_here"
+
+# Run the analyzer
+npx tsx SEO-Analyzer.ts
 ```
 
-2. **Environment Setup**:
+## Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+- Hyperbrowser API key
+
+## Environment Variables
+
 Create a `.env` file in the project root:
-```env
-HYPERBROWSER_API_KEY=your_hyperbrowser_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here
-```
-
-## Usage 🚀
-
-### Command Line Usage
 
 ```bash
-# Analyze any website
-npx tsx SEO-Analyzer.ts https://example.com
-
-# Analyze your own website
-npx tsx SEO-Analyzer.ts https://yourwebsite.com
+HYPERBROWSER_API_KEY=your_api_key_here
 ```
 
-### Example Output
+## Usage
+
+### Interactive Mode
+
+The tool uses an interactive CLI to prompt for the website URL:
+
+```bash
+npx tsx SEO-Analyzer.ts
+```
+
+**Example Session:**
 
 ```
-🔍 Starting SEO analysis for: https://example.com
-📄 Scraping webpage content...
-🤖 Analyzing SEO with AI...
-✅ SEO analysis completed!
+Enter the website URL to analyze: example.com
+Analyzing SEO for: https://example.com...
 
-================================================================================
-🎯 SEO ANALYSIS REPORT FOR: https://example.com
-================================================================================
+============================================================
+SEO ANALYSIS RESULTS FOR: https://example.com
+============================================================
 
-📊 OVERALL SEO SCORE: 75/100
+OVERALL SEO SCORE: 75/100
 
-📋 SUMMARY:
-The website has a solid foundation but needs improvements in meta descriptions and image optimization...
+SUMMARY:
+The website has a solid foundation but needs improvements in
+meta descriptions and image optimization...
 
-🚨 CRITICAL ISSUES (1):
+ISSUES FOUND (5):
 
-1. TITLE: Missing or duplicate title tags detected
-   💡 Recommendation: Add unique, descriptive title tags (50-60 characters)
-   🎯 Priority: 9/10
+1. CRITICAL - TITLE
+   Issue: Missing or duplicate title tags detected
+   Recommendation: Add unique, descriptive title tags (50-60 characters)
 
-⚠️ HIGH ISSUES (2):
+2. HIGH - META_DESCRIPTION
+   Issue: Meta description is too short
+   Recommendation: Expand meta description to 150-160 characters
 
-1. META_DESCRIPTION: Meta description is too short
-   💡 Recommendation: Expand meta description to 150-160 characters with compelling copy
-   🎯 Priority: 8/10
+3. MEDIUM - IMAGES
+   Issue: 5 images missing alt text
+   Recommendation: Add descriptive alt text to all images
 
-✅ STRENGTHS:
+STRENGTHS:
 1. Strong heading structure with proper H1-H6 hierarchy
 2. Fast loading times and good technical performance
 
-⚡ QUICK WINS:
+QUICK WINS:
 1. Add alt text to 5 images missing descriptions
 2. Optimize meta description length for better click-through rates
+============================================================
 ```
 
-## SEO Analysis Categories 📊
+### Alternative Commands
+
+```bash
+# Development mode
+npm run dev
+
+# Using ts-node
+npm start
+
+# Direct execution
+npx tsx SEO-Analyzer.ts
+```
+
+## SEO Analysis Categories
 
 The tool analyzes these key SEO factors:
 
 | Category | What it Checks |
 |----------|----------------|
-| **Title Tags** | Length, uniqueness, keyword inclusion |
-| **Meta Descriptions** | Length, compelling copy, keyword usage |
+| **Title Tags** | Length (50-60 chars), uniqueness, keyword inclusion |
+| **Meta Descriptions** | Length (150-160 chars), compelling copy, keywords |
 | **Headings** | H1-H6 hierarchy, keyword usage, structure |
 | **Content** | Quality, length, keyword density, readability |
 | **Images** | Alt text, file names, optimization |
 | **Links** | Internal/external linking, anchor text |
-| **Technical** | Page structure, schema markup, accessibility |
+| **Technical SEO** | Page structure, schema markup, accessibility |
 
-## Issue Severity Levels 🚨
+## Issue Severity Levels
 
-- **🚨 Critical**: Severely impacts SEO (missing titles, broken structure)
-- **⚠️ High**: Important issues to fix soon (poor meta descriptions, missing H1)
-- **🔶 Medium**: Optimization opportunities (image alt text, internal linking)
-- **ℹ️ Low**: Minor improvements (keyword density, content length)
+- **Critical**: Severely impacts SEO (missing titles, broken structure)
+- **High**: Important issues to fix soon (poor meta descriptions, missing H1)
+- **Medium**: Optimization opportunities (image alt text, internal linking)
+- **Low**: Minor improvements (keyword density, content length)
 
-## Output Files 📁
+## Output Structure
 
-Analysis results are saved as JSON files:
-- **Filename**: `seo-analysis-{domain}-{timestamp}.json`
-- **Content**: Complete analysis data including URL, timestamp, and all findings
-- **Use Case**: Track improvements over time, share with team members
+The tool provides structured output including:
 
-## Integration Options 🔧
+- **Overall SEO Score**: Numerical score from 0-100
+- **Summary**: High-level assessment of the website's SEO status
+- **Issues**: Categorized list of problems with severity, description, and recommendations
+- **Strengths**: What the website is doing well
+- **Quick Wins**: Easy improvements for immediate impact
 
-### Use as a Module
+## API Reference
+
+Uses **Hyperbrowser's official API methods**:
 
 ```typescript
-import { analyzeSEO } from './SEO-Analyzer';
+import { Hyperbrowser } from "@hyperbrowser/sdk";
+import { z } from "zod";
 
-const analysis = await analyzeSEO('https://example.com');
-if (analysis) {
-  console.log(`SEO Score: ${analysis.overall_score}/100`);
-  console.log(`Issues found: ${analysis.issues.length}`);
-}
+// Initialize Hyperbrowser client
+const client = new Hyperbrowser({
+  apiKey: process.env.HYPERBROWSER_API_KEY,
+});
+
+// Define schema for structured SEO extraction
+const schema = z.object({
+  url: z.string(),
+  overallScore: z.number().min(0).max(100),
+  summary: z.string(),
+  issues: z.array(z.object({
+    type: z.string(),
+    severity: z.enum(["critical", "high", "medium", "low"]),
+    issue: z.string(),
+    recommendation: z.string(),
+  })),
+  strengths: z.array(z.string()),
+  quickWins: z.array(z.string()),
+});
+
+// Extract structured SEO data
+const result = await client.extract.startAndWait({
+  urls: [url],
+  prompt: `Perform a comprehensive SEO analysis...`,
+  schema: schema,
+});
 ```
 
-### Web Interface Integration
+## Dependencies
 
-The tool can be easily integrated into:
-- Next.js applications
-- Express.js APIs
-- React dashboards
-- Chrome extensions
+- **@hyperbrowser/sdk**: Hyperbrowser SDK for AI-powered web extraction and SEO analysis
+- **dotenv**: Environment variable management
+- **zod**: Schema validation for structured data extraction
+- **readline**: Interactive command-line interface
+- **TypeScript**: Type-safe development
 
-## Troubleshooting 🐛
+## Development
 
-**Common Issues:**
+### Project Structure
 
-1. **"API Key not found"**
-   - Ensure `.env` file exists with correct API keys
-   - Check that environment variables are properly loaded
+```
+SEO-Analyzer/
+├── SEO-Analyzer.ts      # Main application file
+├── package.json         # Project dependencies and scripts
+├── tsconfig.json        # TypeScript configuration
+├── .env                 # Environment variables (create this)
+└── README.md            # This file
+```
 
-2. **"Scrape failed"**
-   - Website might be blocking scrapers
-   - Check if URL is accessible and valid
-   - Some sites require authentication
+### Architecture
 
-3. **"No content found"**
-   - Website might be heavily JavaScript-based
-   - Content might be dynamically loaded
-   - Try a different URL or page
+Single-file TypeScript implementation (~135 LOC):
 
-## Examples 💡
+- **Hyperbrowser SDK**: AI-powered web extraction via `extract.startAndWait()`
+- **Zod Schema Validation**: Type-safe structured SEO data extraction
+- **Interactive CLI**: readline-based user input with colored output
+- **Smart URL Handling**: Automatically adds `https://` protocol if missing
+- **Error Handling**: Graceful error handling with informative messages
 
-**Good for analyzing:**
-- Blog posts and articles
-- Product pages
-- Landing pages
-- Company websites
-- E-commerce pages
+## Troubleshooting
 
-**Best practices:**
-- Analyze multiple pages from your site
-- Run analysis before and after SEO changes
-- Focus on critical and high-priority issues first
-- Monitor scores over time
+### Common Issues
 
-## API Costs 💰
+1. **API Key Error**: Make sure your Hyperbrowser API key is correctly set in the `.env` file or environment variables
+2. **Network Issues**: Ensure you have a stable internet connection
+3. **TypeScript Errors**: Run `npm install` to ensure all dependencies are installed
+4. **Scraping Failed**: Website might be blocking automated access or require authentication
+5. **No Content Found**: Site might be heavily JavaScript-based or have dynamic content loading
 
-- **Hyperbrowser**: ~$0.01-0.05 per analysis (depending on page size)
-- **OpenAI GPT-4**: ~$0.03-0.10 per analysis (depending on content length)
+### Getting Help
 
-## Contributing 🤝
+- Check the [Hyperbrowser documentation](https://docs.hyperbrowser.ai) for API-related issues
+- Ensure your API key has sufficient credits
+- Verify that the URL is accessible and valid
+- Join the [Discord community](https://discord.gg/zsYzsgVRjh) for support
 
-Feel free to submit issues, feature requests, or pull requests to improve the tool!
+## Use Cases
 
-## License 📝
+**SEO Professionals:**
+- Perform comprehensive website audits
+- Track SEO improvements over time
+- Identify technical SEO issues
 
-MIT License - feel free to use this tool for your SEO analysis needs!
+**Web Developers:**
+- Validate SEO implementation
+- Catch SEO issues during development
+- Optimize page structure and metadata
+
+**Content Creators:**
+- Optimize blog posts and articles
+- Improve meta descriptions and titles
+- Enhance content discoverability
+
+**Marketing Teams:**
+- Monitor website SEO health
+- Competitive SEO analysis
+- Content optimization strategy
+
+## Learn More
+
+- **Hyperbrowser Documentation:** [https://docs.hyperbrowser.ai](https://docs.hyperbrowser.ai)
+- **Hyperbrowser Discord:** [https://discord.gg/zsYzsgVRjh](https://discord.gg/zsYzsgVRjh)
+- **Support:** info@hyperbrowser.ai
+
+---
+
+Follow [@hyperbrowser](https://x.com/hyperbrowser) for updates.

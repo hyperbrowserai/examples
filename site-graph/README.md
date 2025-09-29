@@ -1,6 +1,8 @@
 # Site Graph Crawler
 
-A TypeScript-based web crawler that generates visual site maps, identifies orphan pages, and analyzes page sizes using the Hyperbrowser API.
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
+
+A TypeScript-based web crawler that generates visual site maps, identifies orphan pages, and analyzes page sizes using the Hyperbrowser Crawl API.
 
 ## Features
 
@@ -25,19 +27,28 @@ A TypeScript-based web crawler that generates visual site maps, identifies orpha
 npm install
 ```
 
-## Getting Your API Key
+## Get an API Key
 
-1. Visit [hyperbrowser.ai](https://hyperbrowser.ai)
-2. Sign up for an account or log in
-3. Navigate to your dashboard/API section
-4. Generate a new API key
-5. Copy the API key for use in the next step
+Get your Hyperbrowser API key at **[https://hyperbrowser.ai](https://hyperbrowser.ai)**
+
+## Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Set up environment variables
+export HYPERBROWSER_API_KEY="your_api_key_here"
+
+# Run the application
+npx ts-node site-graph.ts
+```
 
 ## Configuration
 
-Create a `.env` file in the project root and add your Hyperbrowser API key:
+Create a `.env` file in the project root:
 
-```env
+```bash
 HYPERBROWSER_API_KEY=your_api_key_here
 ```
 
@@ -46,8 +57,6 @@ HYPERBROWSER_API_KEY=your_api_key_here
 ### Running the Crawler
 
 ```bash
-npm run dev
-# or
 npx ts-node site-graph.ts
 ```
 
@@ -109,27 +118,55 @@ A table showing the top 10 largest pages by content size, which can help identif
 - Content that could be optimized
 - Resource-heavy pages that need attention
 
-## Technical Details
+## API Reference
 
-- **Language**: TypeScript with ES modules
-- **Crawling**: Uses Hyperbrowser's cloud-based crawling service
-- **Domain Parsing**: Uses `tldts` for reliable domain extraction
-- **Output**: Styled with `chalk` and `cli-table3` for beautiful terminal display
-
-## Configuration Options
-
-You can modify the crawler behavior by editing the `StartCrawlJobParams` in `site-graph.ts`:
+Uses **Hyperbrowser's official API methods**:
 
 ```typescript
+import { Hyperbrowser } from '@hyperbrowser/sdk';
+
+const client = new Hyperbrowser({ apiKey: HB_KEY });
+
+// Start crawling and wait for completion
 const crawlResult = await client.crawl.startAndWait({
   url: target,
-  maxPages: depth * 10,     // Maximum pages to crawl
-  followLinks: true,        // Follow links to discover new pages
+  maxPages: depth * 10,
+  followLinks: true,
   scrapeOptions: {
-    formats: ['links']      // Extract link information
+    formats: ['links', 'html', 'markdown']
   }
 });
 ```
+
+## Technical Details
+
+- **Language**: TypeScript with ES modules
+- **Crawling**: Uses Hyperbrowser's cloud-based Crawl API via `crawl.startAndWait()`
+- **Domain Parsing**: Uses `tldts` for reliable domain extraction
+- **Output**: Styled with `chalk` and `cli-table3` for beautiful terminal display
+
+## Development
+
+### Project Structure
+
+```
+site-graph/
+├── site-graph.ts          # Main application file
+├── package.json           # Project dependencies and scripts
+├── tsconfig.json          # TypeScript configuration
+├── .env                   # Environment variables (create this)
+└── README.md              # This file
+```
+
+### Architecture
+
+Single-file TypeScript implementation (~72 LOC):
+
+- **Hyperbrowser SDK**: Cloud-based web crawling via `crawl.startAndWait()`
+- **Interactive CLI**: readline-based user input with colored output
+- **Domain Filtering**: Uses `tldts` to ensure same-domain link following
+- **Graph Analysis**: Builds site map, detects orphan pages, and analyzes page sizes
+- **Formatted Output**: Beautiful terminal output with `chalk` and `cli-table3`
 
 ## Troubleshooting
 
@@ -152,19 +189,23 @@ const crawlResult = await client.crawl.startAndWait({
    - Verify the site allows crawling (check robots.txt)
    - Try a smaller depth/maxPages value
 
+### Getting Help
+
+- Check the [Hyperbrowser documentation](https://docs.hyperbrowser.ai) for API-related issues
+- Ensure your API key has sufficient credits
+- Verify that the target URL is accessible and allows crawling
+- Join the [Discord community](https://discord.gg/zsYzsgVRjh) for support
+
 ## Dependencies
 
-- `@hyperbrowser/sdk` - Cloud-based web crawling service
-- `chalk` - Terminal styling and colors
-- `cli-table3` - ASCII table formatting
-- `dotenv` - Environment variable management
-- `tldts` - Domain parsing and validation
-- `readline/promises` - Interactive command-line input
+- **@hyperbrowser/sdk**: Hyperbrowser SDK for cloud-based web crawling
+- **chalk**: Terminal styling and colors
+- **cli-table3**: ASCII table formatting
+- **dotenv**: Environment variable management
+- **tldts**: Domain parsing and validation
+- **commander**: CLI framework (dependency)
+- **TypeScript**: Type-safe development
 
-## License
+---
 
-ISC
-
-## Contributing
-
-Feel free to submit issues and enhancement requests!
+Follow [@hyperbrowser](https://x.com/hyperbrowser) for updates.

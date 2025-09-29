@@ -1,62 +1,144 @@
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
+
 # Trend Summary Tool
 
-A tool that aggregates trending topics from Hacker News and finds related discussions on Reddit to provide comprehensive trend summaries.
+Automated trend analysis tool that discovers the top post from Hacker News and finds related discussions on Reddit, providing comprehensive cross-platform summaries of trending topics.
 
-## What it does
+## Features
 
-This tool:
+- Multi-page browser automation using HyperAgent
+- Parallel page execution for efficient data gathering
+- AI-powered content extraction from Hacker News
+- Automated Reddit search for related discussions
+- Intelligent summarization of community conversations
 
-1. Opens Hacker News and finds the top post published today
-2. Searches Reddit for discussions related to that Hacker News post
-3. Identifies recent conversations and provides a summary of the discussions
+## What It Does
 
-## Requirements
+This tool demonstrates advanced multi-page browser automation:
+
+1. **Discovers Trending Content** - Opens Hacker News and extracts the top post published today (title, URL, and key information)
+2. **Cross-Platform Search** - Simultaneously opens a second browser page to search Reddit for related discussions
+3. **Community Analysis** - Finds top posts and comments about the HN topic on Reddit
+4. **Intelligent Summarization** - Provides an overall summary of recent conversations and community sentiment
+
+## Prerequisites
 
 - Node.js (v16 or higher recommended)
-- A HyperBrowser API key (get your free key at [hyperbrowser.ai](https://hyperbrowser.ai))
-- An OpenAI API key
+- API keys for:
+  - **Hyperbrowser**: Get yours at [hyperbrowser.ai](https://hyperbrowser.ai)
+  - **OpenAI**: Required by HyperAgent for AI-powered browser automation
 
-## Setup
+## Quick Start
 
-1. Clone this repository
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-```bash
-git clone <repository-url>
-cd Multipage-tool
+2. **Set up environment variables:**
+   Create a `.env` file:
+   ```env
+   HYPERBROWSER_API_KEY=your_hyperbrowser_api_key
+   OPENAI_API_KEY=your_openai_api_key
+   ```
+
+3. **Run the tool:**
+   ```bash
+   npx ts-node TrendSummary.ts
+   ```
+
+## Example Output
+
+```
+===Starting HyperAgent===
+
+Opening first page...
+Executing first task...
+First destination found: [Title of top HN post] - [URL] - [Key details]
+
+Opening second page...
+Searching for information about [HN post title]... on Reddit
+=== Summary of Reddit discussions ===
+[AI-generated summary of Reddit conversations, top comments, and community sentiment]
+
+Closing agent...
+Agent closed successfully.
 ```
 
-2. Install dependencies
+## How It Works
 
-```bash
-npm install
+### Multi-Page Architecture
+
+The tool uses HyperAgent's multi-page capabilities to run parallel browser sessions:
+
+```typescript
+// Create agent with multiple page support
+const agent = new HyperAgent();
+
+// First page: Hacker News extraction
+const page1 = await agent.newPage();
+const page1Response = await page1.ai(
+  "Open Hacker News front page, find the top post..."
+);
+
+// Second page: Reddit search (runs independently)
+const page2 = await agent.newPage();
+const page2Response = await page2.ai(
+  `Search Reddit for: ${page1Response.output}...`
+);
 ```
 
-3. Create a `.env` file in the root directory with your API keys:
+### AI-Powered Navigation
 
-```
-HYPERBROWSER_API_KEY=your_hyperbrowser_key_here
-OPENAI_API_KEY=your_openai_key_here
-```
+HyperAgent handles complex browser interactions automatically:
+- Navigating to websites
+- Identifying relevant content
+- Extracting structured information
+- Following search workflows
+- Summarizing findings
 
-## Usage
+## Code Structure
 
-Run the script with:
+**Main file**: `TrendSummary.ts`
 
-```bash
-npx ts-node TrendSummary.ts
-```
+**Key components:**
+- HyperAgent initialization with multi-page support
+- Page 1: HN scraping task with AI-driven content extraction
+- Page 2: Reddit search and discussion analysis
+- Error handling with graceful cleanup
 
-## How it works
+**Dependencies:**
+- `@hyperbrowser/agent` (v0.3.1) - Multi-page AI browser automation
+- `@hyperbrowser/sdk` (v0.48.1) - Hyperbrowser SDK for session management
+- `@langchain/openai` (v0.5.10) - LangChain integration for AI capabilities
+- `dotenv` (v16.5.0) - Environment variable management
+- `zod` - Schema validation
 
-The tool uses HyperBrowser's AI agent capabilities to:
+## Use Cases
 
-1. Navigate to Hacker News and identify the top trending post
-2. Open a second browser page to search Reddit for related discussions
-3. Analyze and summarize the discussions to provide insights
+- **Trend Research**: Quickly understand what's trending and why
+- **Community Sentiment**: Gauge Reddit's reaction to HN topics
+- **Content Discovery**: Find discussions across multiple platforms
+- **Market Research**: Track emerging technologies and product launches
+- **Competitive Intelligence**: Monitor competitor mentions and community feedback
 
-## Dependencies
+## Important Notes
 
-- `@hyperbrowser/agent` (v0.3.1) & `@hyperbrowser/sdk` (v0.48.1): For browser automation with AI
-- `@langchain/openai` (v0.5.10): For AI-powered content analysis
-- `dotenv` (v16.5.0): For environment variable management
-- `zod`: For schema validation
+- Sessions are automatically cleaned up using `try-finally` blocks
+- Multiple pages can run independently without blocking each other
+- HyperAgent requires OpenAI API key for AI-powered browser automation
+- The tool focuses on posts published "today" for freshness
+- Error handling ensures proper agent cleanup even if tasks fail
+
+## Extending the Tool
+
+You can easily modify this tool to:
+- Search additional platforms (Twitter, LinkedIn, etc.)
+- Track specific keywords or topics
+- Run on a schedule for continuous monitoring
+- Export results to different formats (JSON, CSV, etc.)
+- Integrate with notification services (Slack, email, etc.)
+
+---
+
+Follow [@hyperbrowser](https://twitter.com/hyperbrowser) for updates

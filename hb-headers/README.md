@@ -1,73 +1,116 @@
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
+
 # hb-headers
 
-> 🔍 Instant CORS & Security-Header Checker powered by [Hyperbrowser](https://hyperbrowser.ai)
+Instant CORS & Security-Header Checker - Analyze HTTP security headers with real browser requests that bypass Cloudflare, solve captchas, and follow redirects.
 
-[![npm version](https://badge.fury.io/js/hb-headers.svg)](https://www.npmjs.com/package/hb-headers)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## Why Hyperbrowser?
 
-## ✨ Features
+[Hyperbrowser](https://hyperbrowser.ai) is the **Internet for AI** — purpose-built for developers creating AI agents and automating web tasks. With built-in stealth capabilities, you get accurate header analysis even on protected sites.
 
-One command to:
-- 🚀 Launch a stealth Hyperbrowser session (bypassing Cloudflare, redirects, captchas)
-- 🔄 Follow every redirect to the final URL
-- 📊 Get a color-coded analysis of security headers:
-  - CORS settings
-  - Content Security Policy
-  - HSTS configuration
-  - Cookie security
-  - Frame options
+## What It Does
 
-## 🚀 Quick Start
+Launch a stealth browser session to:
+- Launch stealth Hyperbrowser session (bypassing Cloudflare, redirects, captchas)
+- Follow every redirect to the final URL
+- Fetch real HTTP headers via Playwright
+- Analyze security headers with color-coded output:
+  - CORS settings (`Access-Control-Allow-Origin`)
+  - Content Security Policy (`Content-Security-Policy`)
+  - HSTS configuration (`Strict-Transport-Security`)
+  - Cookie security (`Set-Cookie`)
+  - Frame protection (`X-Frame-Options`)
 
-```bash
-# Run directly with npx
-npx hb-headers https://example.com
+## Quick Start
 
-# Or install globally
-npm install -g hb-headers
-hb-headers https://example.com
-```
-
-### Example Output
-```
-URL chain: http → www → https://example.com ✅
-
-Header                      Value                           Status
-───────────────────────────────────────────────────────────────────
-Access-Control-Allow-Origin *                               ⚠️
-Content-Security-Policy     missing                         ❌
-Strict-Transport-Security   max-age=63072000; includeSub... ✅
-Set-Cookie                  session=… Secure; HttpOnly      ✅
-```
-
-## 🔑 Setup
-
-1. Visit [hyperbrowser.ai](https://hyperbrowser.ai)
-2. Sign up (free tier available) and copy your API key
-3. Set your API key:
+1. **Get your API key**: https://hyperbrowser.ai
+2. **Install dependencies**:
    ```bash
-   export HYPERBROWSER_API_KEY=pk_live_your_key_here
+   cd hb-headers
+   npm install
    ```
-   Or use the `--key` flag: `hb-headers --key <your-key> <url>`
+3. **Configure**: Set your API key
+   ```bash
+   export HYPERBROWSER_API_KEY=hb_your_api_key_here
+   ```
+4. **Run**:
+   ```bash
+   npx tsx headers.ts https://example.com
+   ```
 
-## 🛠 Options
+## Example Output
 
-| Flag    | Description                      |
-|---------|----------------------------------|
-| `--json`| Output raw JSON (great for CI)   |
-| `--key` | Provide API key inline           |
+```
+🌐 Starting stealth session for: https://example.com
+✅ Reached: https://example.com
 
-## 💪 Why Use hb-headers?
+🔍 Security header report:
 
-- **Accurate CORS Debugging**: See headers after JS/CDN rewrites
+✅ access-control-allow-origin: *
+   Tip: Consider specifying only trusted origins.
+
+❌ content-security-policy: missing
+   Tip: Add a CSP to prevent XSS attacks.
+
+✅ strict-transport-security: max-age=63072000
+   Tip: HSTS is active.
+
+✅ set-cookie: sessionid=abc123; HttpOnly; Secure
+   Tip: Ensure cookies have HttpOnly and Secure flags.
+
+❌ x-frame-options: missing
+   Tip: Protects against clickjacking.
+```
+
+## Features
+
+- **Real Browser Requests**: Uses Playwright over CDP for authentic header analysis
+- **Stealth Mode**: Bypasses anti-bot protections with `useStealth: true`
+- **Auto Captcha Solving**: Solves captchas automatically with `solveCaptchas: true`
+- **Color-Coded Output**: Easy-to-read security analysis with chalk formatting
+- **Extended Timeout**: 60-second timeout for slow-loading sites
+
+## Why Use hb-headers?
+
+- **Accurate CORS Debugging**: See headers after JavaScript/CDN rewrites
 - **Security Validation**: Instant pass/fail on HSTS, CSP, cookies
-- **CI-Ready**: Runs headless, perfect for automation
+- **Headless Ready**: Perfect for CI/CD pipelines and automation
 - **Enterprise-Grade**: Powered by Hyperbrowser's industrial-strength stealth stack
 
-## 📝 License
+## Code Structure
 
-[Hyperbrowser](https://hyperbrowser.ai) - Fork, hack, and share!
+```
+hb-headers/
+├── headers.ts         # Main script with header analysis logic
+├── package.json       # Dependencies (@hyperbrowser/sdk, playwright-core, chalk)
+└── tsconfig.json      # TypeScript configuration
+```
+
+### How It Works
+
+1. Creates a stealth Hyperbrowser session with captcha solving enabled
+2. Connects Playwright via WebSocket to the remote browser
+3. Navigates to the target URL with extended timeout
+4. Fetches HTTP headers from the final URL using Playwright's request API
+5. Analyzes and displays security headers with recommendations
+
+## Configuration
+
+The script checks these security headers:
+- `access-control-allow-origin` - CORS policy
+- `content-security-policy` - XSS protection
+- `strict-transport-security` - HTTPS enforcement
+- `set-cookie` - Cookie security flags
+- `x-frame-options` - Clickjacking protection
+
+## Use Cases
+
+- **Security Audits**: Quickly check if sites follow security best practices
+- **CORS Debugging**: Verify CORS headers for API endpoints
+- **CI/CD Integration**: Add security header checks to your deployment pipeline
+- **Site Monitoring**: Track security header changes over time
+- **Penetration Testing**: Analyze security posture of web applications
 
 ---
 
-Built with 🤍 by [Hyperbrowser](https://hyperbrowser.ai) - The fastest way to browse, scrape, and test the web.
+🚀 **Scale your web automation** with [Hyperbrowser](https://hyperbrowser.ai) | Follow @hyperbrowser

@@ -1,107 +1,180 @@
-# GitHub Changelog Generator
+# Changelog Builder 📝
 
-A powerful Streamlit application that generates comprehensive changelogs by analyzing git commit differences between two references.
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
 
-## 🌟 Features
+A powerful Streamlit web application that automatically generates comprehensive changelogs by analyzing git commit differences between any two references in a GitHub repository. Perfect for release management, documentation, and tracking project evolution.
 
-- **Visual Git Comparison**: Compare any two commits or references from a GitHub repository
-- **Detailed Change Information**: Extract detailed information about commits and file changes
-- **Multiple Changelog Formats**:
-  - **Standard Changelog**: A traditional chronological listing of commits and changes
-  - **Categorized Changelog**: Changes organized by type (features, bugfixes, docs, etc.)
-  - **AI-Processed Changelog**: An intelligent, structured changelog created using OpenAI
-    - Clearly separates additions, removals, changes, and fixes
-    - Focuses on human-readable summaries over technical details
-- **Easy to Use**: Simple interface with download options for all generated changelogs
+## ✨ Features
 
-## 📋 Requirements
+- 🔍 **Smart Git Comparison**: Compare any two commits, branches, or tags from a GitHub repository
+- 📊 **Visual Commit Exploration**: Browse commits and file changes with expandable sections
+- 🤖 **AI-Powered Changelogs**: Uses OpenAI to generate human-readable summaries
+- 📂 **Multiple Formats**:
+  - **Commit Diff View**: Traditional chronological listing with detailed file changes
+  - **Categorized Changelog**: Auto-categorized by commit type (features, bugfixes, docs, tests, etc.)
+  - **AI-Processed Changelog**: Intelligent changelog clearly separating additions, removals, changes, and fixes
+  - **Raw Data View**: Complete JSON data for custom processing
+- 💾 **Download Options**: Export any changelog format as markdown
+- 🎯 **Web Scraping Powered**: Uses Hyperbrowser's Extract API to reliably fetch GitHub comparison data
 
-- Python 3.8+
-- Streamlit
-- Hyperbrowser API key
-- OpenAI API key (for AI-processed changelogs)
+## 🔧 Installation
 
-## 🛠️ Installation
+1. Install dependencies using uv (recommended):
+```bash
+uv pip install -e .
+```
 
-1. Clone this repository:
-   ```bash
-   git clone <your-repo-url>
-   cd github-changelog-generator
-   ```
+Or using pip:
+```bash
+pip install -r requirements.txt
+```
 
-2. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. **Get API keys**:
+   - Hyperbrowser: [https://hyperbrowser.ai](https://hyperbrowser.ai)
+   - OpenAI (optional, for AI changelogs): [https://platform.openai.com](https://platform.openai.com)
 
 3. Set up environment variables:
-   Create a `.env` file in the project root with the following content:
-   ```
-   HYPERBROWSER_API_KEY=your_hyperbrowser_key_here
-   OPENAI_API_KEY=your_openai_key_here
-   ```
+```bash
+# Create .env file
+cat > .env << EOF
+HYPERBROWSER_API_KEY=your_hyperbrowser_key_here
+OPENAI_API_KEY=your_openai_key_here
+EOF
+```
 
-## 🚀 Usage
+## 🚀 Quick Start
 
-1. Start the Streamlit app:
-   ```bash
-   streamlit run app.py
-   ```
+```bash
+# Install dependencies
+uv pip install -e .
 
-2. In your browser, enter:
-   - A GitHub repository URL (e.g., `https://github.com/username/repo`)
-   - Starting commit hash/reference (e.g., `v1.0` or a commit hash)
-   - Ending commit hash/reference (e.g., `main` or a commit hash)
+# Run the Streamlit app
+streamlit run main.py
+```
 
-3. Click "View Comparison" to generate changelogs
+Then in your browser:
+1. Enter a GitHub repository URL (e.g., `https://github.com/facebook/react`)
+2. Enter starting reference (e.g., `v18.2.0` or a commit hash)
+3. Enter ending reference (e.g., `v18.3.0` or `main`)
+4. Click "View Comparison" to generate changelogs
 
-4. Navigate between the different tabs to view different changelog formats:
-   - **Detailed View**: Browse commits and file changes with expandable sections
-   - **Standard Changelog**: A traditional chronological changelog
-   - **Categorized Changelog**: Changes organized by type (features, bugfixes, etc.)
-   - **AI-Processed Changelog**: An intelligent changelog with additions, removals, changes, and fixes clearly separated
-   - **Raw Data**: View the raw JSON data
+## 💡 Usage Examples
 
-5. Download any changelog format using the provided download buttons
+### Compare Release Tags
+```
+Repository: https://github.com/facebook/react
+Start: v18.2.0
+End: v18.3.0
+```
+→ Generates changelog showing all changes between these releases
+
+### Compare Branch to Main
+```
+Repository: https://github.com/yourusername/yourproject
+Start: develop
+End: main
+```
+→ Shows what changes are in main that aren't in develop
+
+### Compare Commit Ranges
+```
+Repository: https://github.com/yourorg/yourrepo
+Start: abc1234
+End: def5678
+```
+→ Detailed diff between any two commit hashes
 
 ## 📊 Changelog Formats
 
-### Standard Changelog
-A traditional changelog that lists all commits chronologically with their associated file changes.
+The tool generates four different views of your changelog:
 
-### Categorized Changelog
-Organizes commits into categories based on their type:
-- ✨ Features
-- 🐛 Bug Fixes
-- 📄 Documentation
-- 🔨 Refactoring
-- 🧪 Tests
-- 🔄 Other Changes
-
-### AI-Processed Changelog
-Uses OpenAI to generate a human-readable changelog that clearly separates:
+### 1. AI-Processed Changelog (Recommended)
+Uses OpenAI GPT-4 to generate a human-readable changelog with clear structure:
 - **Added**: New features, files, or functionality
-- **Removed**: Deleted functionality, deprecated features, or files
+- **Removed**: Deleted functionality, deprecated features, or removed files
 - **Changed**: Updates to existing features or refactoring
 - **Fixed**: Bug fixes and error corrections
 
-## 🧩 Project Structure
+Each commit is presented with a clickable link to the full GitHub comparison view.
 
-- `app.py`: Main Streamlit application
-- `changelog_generator.py`: Core logic for generating changelogs
-- `requirements.txt`: Project dependencies
+### 2. Commit Diff View
+Traditional chronological view showing:
+- Commit messages and descriptions
+- Committer names and verification status
+- Detailed file-by-file changes
+- Line additions/deletions per file
+- Code diff previews
+
+### 3. Categorized Changelog
+Auto-categorizes commits using heuristics based on commit message keywords:
+- ✨ Features (feat, feature, add, new)
+- 🐛 Bug Fixes (fix, bug, issue, error, resolv)
+- 📄 Documentation (doc, readme, comment)
+- 🔨 Refactoring (refactor, clean, restructure)
+- 🧪 Tests (test, spec, assert)
+- 🔄 Other Changes
+
+### 4. Raw Data
+Complete JSON data extracted from GitHub for custom processing or integration.
+
+## 🏗️ Project Structure
+
+```
+changelog-builder/
+├── main.py                    # Streamlit web app entrypoint
+├── changelog_generator.py     # Core changelog generation logic
+├── pyproject.toml            # Python dependencies (uv/pip)
+├── uv.lock                   # Lockfile for reproducible builds
+└── .streamlit/               # Streamlit configuration
+```
 
 ## ⚙️ How It Works
 
-1. The application uses Hyperbrowser to extract git comparison data from GitHub
-2. It processes this data to extract commits, file changes, additions, and deletions
-3. Various changelog formats are generated based on this data
-4. For AI-processed changelogs, the data is sent to OpenAI's API to generate more human-friendly descriptions
+1. **Extract**: Uses Hyperbrowser's Extract API to scrape GitHub comparison pages
+   - Fetches commit messages, descriptions, and committer info
+   - Extracts file changes with additions/deletions count
+   - Captures code diffs for detailed analysis
 
-## 📝 License
+2. **Process**: Transforms raw data into structured formats
+   - Parses commits and file changes using Pydantic models
+   - Categorizes commits based on message keywords
+   - Formats data for different changelog styles
 
-[MIT License](LICENSE)
+3. **Generate**: Creates multiple changelog formats
+   - Standard chronological view
+   - Heuristic-based categorization
+   - AI-powered intelligent summaries (optional)
 
-## 🤝 Contributing
+4. **Export**: Provides download options for all formats as markdown files
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](link-to-issues).
+## 🔑 Environment Variables
+
+```bash
+HYPERBROWSER_API_KEY    # Required - Get at https://hyperbrowser.ai
+OPENAI_API_KEY          # Optional - Required only for AI-processed changelogs
+```
+
+## 🐛 Troubleshooting
+
+**"HYPERBROWSER_API_KEY environment variable not set"**
+- Make sure you have a `.env` file in the project directory
+- Verify the API key is correct and not expired
+
+**"OpenAI API key not found"**
+- This is optional - categorized and commit diff views work without it
+- Add `OPENAI_API_KEY` to `.env` file to enable AI-processed changelogs
+
+**No data extracted**
+- Verify the GitHub repository is public
+- Check that commit references (tags/branches/hashes) exist in the repository
+- Ensure the comparison isn't empty (start and end references are different)
+
+## 📚 Resources
+
+- Hyperbrowser Documentation: [https://docs.hyperbrowser.ai](https://docs.hyperbrowser.ai)
+- Hyperbrowser Discord: [https://discord.gg/zsYzsgVRjh](https://discord.gg/zsYzsgVRjh)
+- Support: info@hyperbrowser.ai
+
+---
+
+Follow [@hyperbrowser](https://x.com/hyperbrowser) for updates.

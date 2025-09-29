@@ -1,8 +1,14 @@
-# US Real Estate Finder
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
 
-An intelligent real estate bot that automatically finds and extracts property listings across the United States based on your search criteria. The bot uses SERP API to search for relevant real estate websites and Hyperbrowser to extract structured data from those sites.
+# Real Estate Finder
 
-## 🚀 Get Started in 2 Minutes
+An intelligent real estate bot that automatically finds and extracts property listings across the United States based on your search criteria. The bot uses SerpAPI to search for relevant real estate websites and Hyperbrowser to extract structured data from those sites.
+
+## Why Hyperbrowser?
+
+[Hyperbrowser](https://hyperbrowser.ai) is the **Internet for AI** — purpose-built for developers creating AI agents and automating web tasks. Skip the infrastructure headaches and focus on building.
+
+## Quick Start
 
 Ready to find your next home? This bot does all the heavy lifting for you - no more manually browsing dozens of real estate websites!
 
@@ -17,17 +23,20 @@ Ready to find your next home? This bot does all the heavy lifting for you - no m
 
 You'll need API keys for:
 
-1. **Hyperbrowser**: Get your API key at [hyperbrowser.ai](https://hyperbrowser.ai) 
-2. **SerpAPI**: Sign up at [SerpAPI](https://serpapi.com) to get your search API key
+1. **Hyperbrowser API Key**: Sign up at [https://hyperbrowser.ai](https://hyperbrowser.ai)
+2. **SerpAPI Key**: Sign up at [https://serpapi.com](https://serpapi.com) to get your search API key
 
-## Setup
+## Installation
 
-1. Clone this repository and install dependencies:
+1. Navigate to the project directory and install dependencies:
+
 ```bash
+cd real-estate-finder
 npm install
 ```
 
-2. Create a `.env` file in the root directory with your API keys:
+2. Create a `.env` file in the project root with your API keys:
+
 ```env
 HYPERBROWSER_API_KEY=your_hyperbrowser_api_key_here
 SERPAPI_KEY=your_serpapi_key_here
@@ -96,11 +105,24 @@ The bot will then:
 - HotPads.com
 - ForRent.com
 
-## 🎯 Start Your Property Search Now!
+## How It Works
 
-1. **Get your free API keys**: [Hyperbrowser](https://hyperbrowser.ai) and [SerpAPI](https://serpapi.com)
-2. **Clone and setup** this repository (takes 2 minutes)
-3. **Run the bot** and find your perfect property!
+1. **User Input** - Interactive CLI prompts for search criteria (location, bedrooms, budget, property type)
+2. **Web Search** - SerpAPI finds relevant real estate listing URLs from trusted platforms
+3. **URL Validation** - Filters for legitimate US real estate websites (Zillow, Apartments.com, etc.)
+4. **Data Extraction** - Hyperbrowser extracts structured listing data using AI-powered prompts
+5. **Result Display** - Formatted output with all property details and links
+
+## Project Structure
+
+```
+real-estate-finder/
+├── real-estate-bot.ts           # Main application logic
+├── package.json                 # Dependencies and scripts
+├── tsconfig.json                # TypeScript configuration
+├── .env                         # Environment variables (create this)
+└── README.md                    # This file
+```
 
 ## API Rate Limits
 
@@ -123,15 +145,28 @@ The bot will then:
 - Make sure you've added `SERPAPI_KEY=your_actual_api_key` to your `.env` file
 - Get your free API key from [SerpAPI](https://serpapi.com/manage-api-key)
 
-## Technical Details
+## Dependencies
 
-The application uses:
-- **TypeScript** for type safety
-- **Zod** for data validation and schema definition
-- **SerpAPI** for web search functionality
-- **Hyperbrowser SDK** for intelligent data extraction
-- **Inquirer** for interactive command-line prompts
+- **[@hyperbrowser/sdk](https://www.npmjs.com/package/@hyperbrowser/sdk)** - Web scraping and browser automation
+- **[serpapi](https://www.npmjs.com/package/serpapi)** - Google search API for finding real estate websites
+- **[zod](https://www.npmjs.com/package/zod)** - TypeScript-first schema validation
+- **[inquirer](https://www.npmjs.com/package/inquirer)** - Interactive command-line prompts
+- **[dotenv](https://www.npmjs.com/package/dotenv)** - Environment variable management
+- **[typescript](https://www.npmjs.com/package/typescript)** - TypeScript language support
 
-## License
+## Requirements
 
-MIT License 
+- **Node.js** 18+ or later
+- **TypeScript** 5.0+ (installed via npm)
+- **Hyperbrowser API Key** (get at [hyperbrowser.ai](https://hyperbrowser.ai))
+- **SerpAPI Key** (get at [serpapi.com](https://serpapi.com))
+
+## Learn More
+
+- **Hyperbrowser Documentation**: [https://docs.hyperbrowser.ai](https://docs.hyperbrowser.ai)
+- **Hyperbrowser Discord**: [https://discord.gg/zsYzsgVRjh](https://discord.gg/zsYzsgVRjh)
+- **Support**: info@hyperbrowser.ai
+
+---
+
+**Ready to find your perfect property? Get started in minutes!** 
