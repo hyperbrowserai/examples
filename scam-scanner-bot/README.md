@@ -1,198 +1,278 @@
-# 🛡️ Scam Scanner – Intelligent Scam Store Scanner
+# Scam Scanner Bot
 
-> **Powered by [Hyperbrowser.ai](https://hyperbrowser.ai) – Real browsers in the cloud**
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
 
-**One command. One scan. Instant fraud detection.**
+An interactive CLI tool that analyzes suspicious online stores for potential fraud indicators. Uses Hyperbrowser's browser automation to scrape websites and detect common scam patterns like fake urgency, insecure links, suspicious domains, and missing legal pages.
 
-This tool leverages Hyperbrowser's cloud-based browser infrastructure to perform deep analysis of suspicious online stores, detecting fraud patterns that traditional crawlers miss.
+## What It Does
 
----
+Detect potential scam websites by analyzing:
 
-## 🚀 **Why Hyperbrowser Makes the Difference**
+- **Suspicious Content Patterns** - Fake urgency, limited time offers, too-good-to-be-true claims
+- **Insecure Links** - HTTP links that could compromise security
+- **External Redirects** - Unusual number of external domain links
+- **Domain Credibility** - Suspicious TLDs (.tk, .ml, .ga, .cf, .pw)
+- **Missing Legal Pages** - No contact info, privacy policy, or terms of service
+- **Payment Security** - Lack of secure payment mentions
 
-### Traditional Crawlers vs. Hyperbrowser
-| Traditional Crawlers | 🌟 **Hyperbrowser** |
-|---------------------|---------------------|
-| ❌ Miss JavaScript-loaded content | ✅ **Full JS execution** – sees dynamic content |
-| ❌ Can't detect redirects | ✅ **Real browser behavior** – catches all redirects |
-| ❌ Limited to static HTML | ✅ **Complete rendering** – captures post-load fraud tactics |
-| ❌ Require local Chrome setup | ✅ **Zero setup** – everything runs in the cloud |
+## Quick Start
 
-### 🎯 **What Scam-Scanner Detects**
-- 🔓 **Insecure HTTP assets** on HTTPS sites
-- ⚠️ **Failed API calls** (4xx/5xx errors)
-- 🏦 **Suspicious payment iframes** from unknown providers
-- 📅 **Brand-new domains** with missing legal pages
-- 🖼️ **Duplicate stock photos** (coming soon)
+### 1. Get Your API Key
 
----
+**Hyperbrowser API Key:** Sign up at [https://hyperbrowser.ai](https://hyperbrowser.ai)
 
-## 📦 **Quick Start**
+### 2. Installation
 
-### 1️⃣ **Get Your Hyperbrowser API Key**
-🔑 **[Get your free API key at hyperbrowser.ai →](https://hyperbrowser.ai)**
-
-### 2️⃣ **Install & Setup**
 ```bash
-# Clone the repository
-git clone https://github.com/hyperbrowserai/examples
 cd scam-scanner-bot
-
-# Install dependencies
-pnpm install        # or npm install
-
-# Configure your API keys
-cp .env.example .env
+npm install
 ```
 
-### 3️⃣ **Add Your Keys to `.env`**
+### 3. Environment Setup
+
+Create a `.env` file in the project root:
+
 ```env
-# 🔑 Get this at hyperbrowser.ai
-HYPERBROWSER_API_KEY=pk_live_xxx
-
-# 🤖 Optional: For AI-powered scoring
-OPENAI_API_KEY=sk-xxx
+HYPERBROWSER_API_KEY=your_hyperbrowser_api_key_here
 ```
 
-### 4️⃣ **Build & Scan**
+Or export it directly:
+
 ```bash
-# Build the project
-pnpm run build
-
-# Scan a suspicious store
-node dist/index.js --url https://suspect-store.xyz
+export HYPERBROWSER_API_KEY="your_key_here"
 ```
 
----
+### 4. Run the Scanner
 
-## 📊 **Sample Output**
-
-```
-🔍 Hyperbrowser analyzing https://suspect-store.xyz...
-✨ Scan complete in 2.3s
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📈 FRAUD ANALYSIS REPORT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🚨 PhonyScore: 82/100 (HIGH RISK)
-
-⚠️  Red Flags Detected:
-• 🔓 12 insecure HTTP assets loaded
-• ❌ 4 failed API requests (4xx/5xx)
-• 🏦 Payment iframe from unknown provider
-• 📅 Domain registered only 11 days ago
-• 📄 Missing privacy policy and terms
-
-💡 Recommendation: AVOID - Multiple fraud indicators present
+```bash
+npm run dev
 ```
 
+## Usage
 
----
+### Interactive Mode
 
-## 🛠️ **Command Reference**
+The tool prompts you to enter a URL to scan:
 
-| Flag | Required | Description |
-|------|----------|-------------|
-| `--url`, `-u` | ✅ | Target store URL (include http/https) |
-| `--key`, `-k` | ⚠️ | Hyperbrowser API key (or set `HYPERBROWSER_API_KEY`) |
-| `--json` | ❌ | Output machine-readable JSON |
-
----
-
-## 🔬 **How It Works**
-
-```mermaid
-graph LR
-    A[🌐 Target URL] --> B[☁️ Hyperbrowser Cloud]
-    B --> C[🖥️ Real Browser Session]
-    C --> D[📡 Network Monitoring]
-    C --> E[🎯 Content Analysis]
-    D --> F[🔍 Fraud Detection]
-    E --> F
-    F --> G[📊 PhonyScore Report]
+```bash
+npm run dev
 ```
 
-1. **🚀 Launch Session** – Hyperbrowser spins up a real browser in the cloud
-2. **📡 Monitor Everything** – Capture all network requests, redirects, and dynamic content
-3. **🔍 Analyze Patterns** – Run advanced heuristics on collected data
-4. **🤖 AI Scoring** – GPT-4 evaluates fraud probability
-5. **📊 Generate Report** – Get actionable insights with confidence scores
+**Example Session:**
 
----
+```
+Enter store URL: https://suspicious-store.com
+🔍  Starting Hyperbrowser scrape…
 
-## 🌟 **Why Choose Hyperbrowser?**
+Scam Scanner Results
+────────────────────────────────────────
+Suspicious Content Patterns: 3
+Insecure Links (HTTP): 5
+External Links: 12
+Suspicious TLD: No
+Has Contact Info: No
+Has Privacy Policy: No
+Mentions Secure Payment: No
 
-### ⚡ **Performance**
-- **2-3 second scans** – Faster than setting up local Chrome
-- **Global edge network** – Optimal performance worldwide
-- **Automatic scaling** – No infrastructure management
+⚠  Suspicious content patterns detected
+✖  Sample insecure link → http://example.com/image.jpg
 
-### 🛡️ **Security & Reliability**
-- **Isolated browser sessions** – Every scan runs in a fresh environment
-- **Enterprise-grade security** – Your data never leaves secure cloud
-- **99.9% uptime SLA** – Production-ready reliability
+Risk Assessment:
+🚨 HIGH RISK - Likely scam website!
+```
 
-### 💰 **Cost-Effective**
-- **Pay-per-scan** – No monthly fees or commitments
-- **Free tier available** – Perfect for testing and small projects
-- **Transparent pricing** – Know exactly what you're paying for
+## Features
 
----
+### Pattern Detection
 
-## 🤝 **Contributing**
+**Suspicious Content:**
+- Urgent sale / limited time offers
+- "Act now" pressure tactics
+- Flash sales and fake scarcity
+- "Too good to be true" claims
+- Wholesale/liquidation language
+- "Going out of business" urgency
 
-We love contributions! Here's how to get started:
+### Security Analysis
 
-### 🔧 **Adding New Detection Rules**
+**Insecure Elements:**
+- HTTP links on HTTPS sites
+- Missing SSL/encryption mentions
+- No secure payment indicators
+
+### Domain Analysis
+
+**Trust Indicators:**
+- Suspicious TLD detection (.tk, .ml, .ga, .cf, .pw)
+- External domain redirect patterns
+- Contact information presence
+- Privacy policy and terms of service
+
+### Risk Scoring
+
+The tool calculates a risk score based on:
+- Number of suspicious content patterns (weight: 2)
+- Presence of insecure links (weight: 1)
+- Excessive external links (weight: 1)
+- Suspicious TLD (weight: 2)
+- Missing contact information (weight: 1)
+- Missing privacy policy (weight: 1)
+- No secure payment mentions (weight: 1)
+
+**Risk Levels:**
+- **HIGH RISK** (5+ points): Likely scam website
+- **MEDIUM RISK** (3-4 points): Exercise caution
+- **LOW RISK** (0-2 points): Appears legitimate
+
+## Sample Output
+
+```
+Scam Scanner Results
+────────────────────────────────────────
+Suspicious Content Patterns: 4
+Insecure Links (HTTP): 8
+External Links: 15
+Suspicious TLD: Yes
+Has Contact Info: No
+Has Privacy Policy: No
+Mentions Secure Payment: No
+
+⚠  Suspicious content patterns detected
+✖  Sample insecure link → http://cdn.example.com/asset.js
+❓  Many external links → https://payment-processor.xyz
+⚠  Suspicious TLD detected → example.tk
+
+Risk Assessment:
+🚨 HIGH RISK - Likely scam website!
+```
+
+## Alternative Commands
+
+```bash
+# Development mode (default)
+npm run dev
+
+# Build TypeScript
+npm run build
+
+# Run compiled version
+npm start
+
+# Direct execution with ts-node
+npx ts-node scam-scanner-bot.ts
+```
+
+## Project Structure
+
+```
+scam-scanner-bot/
+├── scam-scanner-bot.ts        # Main application logic
+├── package.json               # Dependencies and scripts (phonycart)
+├── tsconfig.json             # TypeScript configuration
+├── .env                      # Environment variables (create this)
+└── README.md                 # This file
+```
+
+## How It Works
+
+1. **User Input** - Interactive prompt for store URL
+2. **URL Validation** - Ensures proper http:// or https:// protocol
+3. **Web Scraping** - Hyperbrowser scrapes HTML and extracts links
+4. **Pattern Analysis** - Checks content against suspicious pattern list
+5. **Security Check** - Analyzes links for HTTP insecurity and external domains
+6. **Domain Analysis** - Evaluates TLD and checks for trust indicators
+7. **Risk Calculation** - Computes weighted risk score
+8. **Report Generation** - Color-coded console output with findings
+
+## Technical Details
+
+### Technologies Used
+
+- **[@hyperbrowser/sdk](https://www.npmjs.com/package/@hyperbrowser/sdk)** - Browser automation and web scraping
+- **[tldts](https://www.npmjs.com/package/tldts)** - Domain parsing and TLD analysis
+- **[chalk](https://www.npmjs.com/package/chalk)** - Colored terminal output
+- **[dotenv](https://www.npmjs.com/package/dotenv)** - Environment variable management
+- **[readline](https://nodejs.org/api/readline.html)** - Built-in Node.js for CLI input
+- **TypeScript** - Type-safe development
+
+### Scrape Configuration
+
 ```typescript
-// src/checks/your-check.ts
-export const yourCheck = {
-  id: 'your-check',
-  severity: 'high',
-  check: (session) => {
-    // Your fraud detection logic
-    return { found: boolean, details: string };
-  }
-};
+scrapeOptions: {
+  formats: ['html', 'links'],
+  waitUntil: 'networkidle',
+  timeout: 30000
+}
 ```
 
-### 🚀 **Development Setup**
+- **formats**: Extracts both HTML content and all page links
+- **waitUntil**: Waits for network to be idle before scraping
+- **timeout**: 30-second maximum wait time
+
+## Use Cases
+
+**E-commerce Shoppers:**
+- Quick credibility check before making online purchases
+- Identify potential scam stores
+
+**Fraud Researchers:**
+- Analyze patterns across suspicious websites
+- Build databases of scam indicators
+
+**Consumer Protection:**
+- Screen reported websites for fraud indicators
+- Generate evidence for investigations
+
+**Browser Extensions:**
+- Integrate as backend service for real-time URL checking
+- Build consumer safety tools
+
+## Limitations
+
+- Analysis is based on heuristics, not 100% accurate
+- Legitimate sites may trigger false positives
+- Does not perform deep financial or legal verification
+- Requires publicly accessible websites
+- No AI-powered analysis (uses pattern matching only)
+
+## Troubleshooting
+
+### Common Issues
+
+**Missing API Key:**
 ```bash
-# Fork and clone
-git clone https://github.com/hyperbrowserai/examples
-
-# Install dependencies
-pnpm install
-
-# Build and test
-pnpm run build
-pnpm test
+# Verify your .env file exists and contains the key
+cat .env
 ```
 
----
+**URL Format Error:**
+- Ensure URL starts with `http://` or `https://`
+- Example: `https://example.com` not `example.com`
 
-## 📞 **Support & Community**
+**Scrape Failed:**
+- Some websites may block automated scraping
+- Check if the site is publicly accessible
+- Verify Hyperbrowser API quota limits
 
-- 📚 **[Hyperbrowser Documentation](https://docs.hyperbrowser.ai)**
-- 💬 **[Discord Community](https://discord.gg/zsYzsgVRjh)**
-- 🐛 **[Report Issues](https://github.com/hyperbrowserai/examples)**
+**TypeScript Errors:**
+```bash
+# Reinstall dependencies
+rm -rf node_modules package-lock.json
+npm install
+```
 
----
+## Requirements
 
-## 📄 **License**
+- **Node.js** 16+ or later
+- **TypeScript** 5.0+ (installed via npm)
+- **Hyperbrowser API Key** (get at [hyperbrowser.ai](https://hyperbrowser.ai))
 
-MIT License – Feel free to use in your projects!
+## Learn More
 
----
+- **Hyperbrowser Documentation:** [https://docs.hyperbrowser.ai](https://docs.hyperbrowser.ai)
+- **Hyperbrowser Discord:** [https://discord.gg/zsYzsgVRjh](https://discord.gg/zsYzsgVRjh)
+- **Support:** info@hyperbrowser.ai
 
-<div align="center">
+## License
 
-
-**[🔑 Get your free Hyperbrowser API key →](https://hyperbrowser.ai)**
-
-Built with ❤️ and **[Hyperbrowser.ai](https://hyperbrowser.ai)** – The future of web automation
-
-[🌟 Star us on GitHub](https://github.com/hyperbrowserai/) • [📖 Documentation](https://docs.hyperbrowser.ai) 
-
-</div>
+MIT

@@ -1,28 +1,30 @@
-# HB UI Bot 🎨📸
+# HB UI Bot
 
-A powerful UI analysis tool that captures website screenshots using Hyperbrowser's official SDK and leverages OpenAI Vision for intelligent design analysis and improvement suggestions.
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
+
+A powerful UI analysis tool that captures website screenshots using Hyperbrowser's official SDK and leverages OpenAI Vision (GPT-4o) for intelligent design analysis and improvement suggestions.
 
 ## Features
 
-- 📸 **Screenshot Capture**: Uses Hyperbrowser's official screenshot API to capture actual website visuals
-- 🧠 **AI Vision Analysis**: OpenAI GPT-4o analyzes screenshots for comprehensive UI/UX insights
-- 🎨 **Color Detection**: Automatically extracts colors from HTML and visual analysis
-- 🖋️ **Font Analysis**: Identifies typography choices and hierarchy
-- 💡 **Smart Suggestions**: AI-powered improvement recommendations
-- 🔍 **Accessibility Review**: Identifies potential accessibility issues
-- 📊 **Flexible Output**: Human-readable or JSON format
-- 🎯 **Visual Analysis**: Analyzes actual appearance, not just code structure
+- **Screenshot Capture**: Uses Hyperbrowser's official scrape API with screenshot format
+- **AI Vision Analysis**: OpenAI GPT-4o analyzes screenshots for comprehensive UI/UX insights
+- **Color Detection**: Automatically extracts colors from HTML (hex, rgb, rgba)
+- **Font Analysis**: Identifies typography choices and font families
+- **Smart Suggestions**: AI-powered improvement recommendations
+- **Accessibility Review**: Identifies potential accessibility issues
+- **Flexible Output**: Human-readable or JSON format
+- **Visual Analysis**: Analyzes actual appearance, not just code structure
 
-## What's New
+## What It Does
 
-🚀 **Now with Visual Analysis!** Instead of just parsing CSS, the bot captures actual screenshots and uses OpenAI's vision capabilities to provide intelligent analysis of:
+Instead of just parsing CSS, HB UI Bot captures actual screenshots and uses OpenAI's vision capabilities to provide intelligent analysis of:
 
 - **Visual Design**: Layout, composition, and visual hierarchy
 - **Color Schemes**: Actual colors as they appear to users
 - **Typography**: Font choices and text readability
 - **UI/UX Issues**: Real usability problems visible in screenshots
 - **Accessibility**: Visual accessibility concerns
-- **Modern Design Trends**: Current best practices
+- **Modern Design Trends**: Current best practices and recommendations
 
 ## Installation
 
@@ -30,14 +32,14 @@ A powerful UI analysis tool that captures website screenshots using Hyperbrowser
 npm install
 ```
 
+## Prerequisites
+
+- Node.js 16+
+- TypeScript
+- Hyperbrowser API key (get at [hyperbrowser.ai](https://hyperbrowser.ai))
+- OpenAI API key (optional, for AI analysis features)
+
 ## Configuration
-
-### Getting API Keys
-
-1. **Hyperbrowser API Key**: Get your API key from [https://hyperbrowser.ai](https://hyperbrowser.ai)
-2. **OpenAI API Key**: Get your API key from [https://openai.com/api](https://openai.com/api) (optional, only needed for AI analysis)
-
-### Setting Up Environment Variables
 
 Set up your API keys as environment variables:
 
@@ -49,8 +51,8 @@ export HYPERBROWSER_API_KEY="your_hyperbrowser_api_key_here"
 export OPENAI_API_KEY="your_openai_api_key_here"
 ```
 
-Or create a `.env` file:
-```
+Or create a `.env` file in the project root:
+```env
 HYPERBROWSER_API_KEY=your_hyperbrowser_api_key_here
 OPENAI_API_KEY=your_openai_api_key_here
 ```
@@ -72,19 +74,21 @@ npx ts-node hb-ui-bot.ts --url https://example.com --analyze
 npx ts-node hb-ui-bot.ts --url https://example.com --json
 ```
 
-### Full Analysis with Custom API Keys
+### With Custom API Keys
 ```bash
 npx ts-node hb-ui-bot.ts --url https://example.com --key YOUR_HB_KEY --openai-key YOUR_OPENAI_KEY --analyze
 ```
 
-## Command Line Options
+## CLI Options
 
-- `-u, --url`: Target URL to analyze (required)
-- `-k, --key`: Hyperbrowser API key (or use `HYPERBROWSER_API_KEY` env var)
-- `--openai-key`: OpenAI API key (or use `OPENAI_API_KEY` env var)
-- `--json`: Output results in JSON format
-- `-a, --analyze`: Use OpenAI Vision to analyze the screenshot and provide insights
-- `--help`: Show help information
+```
+-u, --url <url>       Target URL to analyze (required)
+-k, --key <key>       Hyperbrowser API key (or use HYPERBROWSER_API_KEY env var)
+--openai-key <key>    OpenAI API key (or use OPENAI_API_KEY env var)
+--json                Output results in JSON format
+-a, --analyze         Use OpenAI Vision to analyze the screenshot
+--help                Show help information
+```
 
 ## Example Output
 
@@ -154,46 +158,57 @@ npx ts-node hb-ui-bot.ts --url https://example.com --key YOUR_HB_KEY --openai-ke
 }
 ```
 
-## Technical Implementation
+## How It Works
 
-### Screenshot Capture
-Uses Hyperbrowser's official `scrape.startAndWait()` method with:
-- `formats: ['screenshot', 'html']` - captures both visual and structural data
-- `timeout: 30000` - allows enough time for page loading
-- `waitFor: 2000` - ensures page is fully rendered
+### 1. Screenshot Capture
+Uses Hyperbrowser's official SDK `scrape.startAndWait()` method:
+```typescript
+const result = await hb.scrape.startAndWait({
+  url: targetUrl,
+  scrapeOptions: {
+    formats: ['screenshot', 'html'],  // Captures both visual and structural data
+    timeout: 30000,                    // 30 second timeout
+    waitFor: 2000                      // Wait 2s for page to fully render
+  }
+});
+```
 
-### AI Vision Analysis
+### 2. Color & Font Extraction
+- **Colors**: Extracted from HTML using regex patterns (hex, rgb, rgba)
+- **Fonts**: Parsed from font-family CSS declarations
+- Results are deduplicated and returned as arrays
+
+### 3. AI Vision Analysis (Optional)
+When `--analyze` flag is used:
 - **Model**: OpenAI GPT-4o with vision capabilities
-- **Input**: Base64-encoded screenshot + analysis prompt
-- **Output**: Comprehensive UI/UX analysis and recommendations
+- **Input**: Base64-encoded screenshot + structured analysis prompt
+- **Analysis includes**: Visual design, colors, typography, UI/UX issues, improvements, accessibility, and modern design trends
+- Screenshot data is automatically converted from URL to base64 if needed
 
-### Color & Font Detection
-- **Colors**: Extracted from HTML using regex patterns for hex, rgb, and rgba values
-- **Fonts**: Parsed from font-family declarations in the HTML
-- **Enhanced**: AI provides additional visual color analysis from screenshots
+## Architecture
 
-## Requirements
-
-- Node.js 16+
-- TypeScript
-- Hyperbrowser API key with screenshot permissions
-- OpenAI API key (optional, for visual analysis features)
+Single TypeScript file (`hb-ui-bot.ts`) with:
+- **CLI Framework**: `yargs` for argument parsing
+- **Web Scraping**: `@hyperbrowser/sdk` for screenshot capture
+- **AI Integration**: `openai` package for GPT-4o vision analysis
+- **Terminal UI**: `chalk` for colored output formatting
 
 ## Error Handling
 
-The tool provides helpful error messages and tips:
-- Missing API keys
+The tool provides helpful error messages for common issues:
+- Missing or invalid API keys
 - Authentication failures
-- Screenshot capture issues
+- Screenshot capture problems
 - Network timeouts
 - Invalid URLs
+- OpenAI API errors
 
-## Performance Notes
+## Performance
 
-- Screenshot capture typically takes 3-5 seconds
-- AI analysis adds 2-3 seconds
+- Screenshot capture: ~3-5 seconds
+- AI analysis (optional): ~2-3 seconds
 - Total processing time: 5-10 seconds per URL
-- Results are cached for the session
+- No caching between runs
 
 ## License
 

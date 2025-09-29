@@ -1,76 +1,64 @@
-# 🕵️ DeepForm
+# DeepForm
 
-**Automatically reverse-engineer any website's form flows with AI-powered analysis.**
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
 
-DeepForm is a CLI app that uses Hyperbrowser to automatically reverse-engineer any website's form flows — identifying input fields, validation rules, submission logic, and UI patterns — so developers can understand, replicate, or debug them instantly without inspecting code manually.
+A CLI tool that automatically reverse-engineers website form structures using AI-powered analysis. Detects all form elements (inputs, textareas, selects, buttons) and provides security insights to identify potential phishing patterns and suspicious behaviors.
 
-## ✨ Features
+## Quick Start
 
-- 🔍 **Intelligent Form Detection** - Automatically discovers all input fields on any webpage
-- 🛡️ **Security Analysis** - AI-powered detection of phishing patterns and suspicious form behaviors
-- 🚀 **Fast Scanning** - Powered by Hyperbrowser's headless browser technology
-- 🎯 **Developer-Friendly** - Clean, actionable insights for form structure analysis
-- 🎨 **Beautiful CLI** - Color-coded output with emoji indicators
+1. **Get your API keys:**
+   - Hyperbrowser: [hyperbrowser.ai](https://hyperbrowser.ai)
+   - OpenAI: [openai.com](https://openai.com)
 
-## 🚀 Quick Start
+2. **Set up environment variables:**
+```bash
+export HYPERBROWSER_API_KEY="your_key_here"
+export OPENAI_API_KEY="your_openai_key_here"
+```
 
-### Prerequisites
+Or create a `.env` file:
+```env
+HYPERBROWSER_API_KEY=your_hyperbrowser_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+```
 
-- Node.js 16+ installed
-- Hyperbrowser API key from [hyperbrowser.ai](https://hyperbrowser.ai)
-- OpenAI API key from [openai.com](https://openai.com)
+3. **Install and run:**
+```bash
+npm install
+npx tsx index.ts
+```
 
-### Installation
+## Usage
 
-1. **Clone or download this project**
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables:**
-   Create a `.env` file in the project root:
-   ```env
-   HYPERBROWSER_API_KEY=your_hyperbrowser_api_key_here
-   OPENAI_API_KEY=your_openai_api_key_here
-   ```
-
-### Getting API Keys
-
-- **Hyperbrowser API Key**: Sign up at [hyperbrowser.ai](https://hyperbrowser.ai) to get your API key
-- **OpenAI API Key**: Get your API key from [openai.com](https://openai.com)
-
-## 🎯 Usage
-
-Run DeepForm with:
+When you run the tool, you'll be prompted to enter a URL:
 
 ```bash
 npx tsx index.ts
 ```
 
-Then enter any URL when prompted:
-
+Then enter the URL you want to scan:
 ```
 🔗 Enter URL to scan: https://example.com
 ```
 
-DeepForm will:
-1. 🕷️ Scrape the webpage using Hyperbrowser
-2. 🔎 Extract all form input fields
-3. 🧠 Analyze the form structure with AI
-4. 📋 Provide security insights and recommendations
+The tool will:
+1. Scrape the webpage using Hyperbrowser
+2. Extract all form elements (inputs, textareas, selects, buttons)
+3. Analyze the form structure with OpenAI GPT-4
+4. Provide security analysis and identify potential threats
 
-## 📊 Example Output
+## Example Output
 
 ```
 🔗 Enter URL to scan: https://login.example.com
 
 ⚙️  Scraping with Hyperbrowser...
 
-✅ Found 3 inputs:
-1. <input type="text" name="username" placeholder="Username">...
-2. <input type="password" name="password" placeholder="Password">...
-3. <input type="hidden" name="csrf_token" value="abc123">...
+✅ Found 4 form elements:
+1. [INPUT] <input type="text" name="username" placeholder="Username">...
+2. [INPUT] <input type="password" name="password" placeholder="Password">...
+3. [INPUT] <input type="hidden" name="csrf_token" value="abc123">...
+4. [BUTTON] <button type="submit">Login</button>...
 
 🧠 Analyzing form structure with OpenAI...
 
@@ -83,53 +71,39 @@ This appears to be a standard login form with proper security measures:
 - Standard field naming conventions used
 ```
 
-## 🛠️ How It Works
+## How It Works
 
-1. **Web Scraping**: Uses Hyperbrowser's powerful browser automation to access any website
-2. **Form Extraction**: Intelligently parses HTML to find all input elements
-3. **AI Analysis**: Leverages OpenAI's GPT models to analyze form patterns and identify potential security issues
-4. **Actionable Insights**: Provides clear, developer-friendly analysis of form structure and security
+1. **Web Scraping**: Uses Hyperbrowser's cloud browser automation to fetch the full rendered HTML
+2. **Form Extraction**: Parses HTML to find all form elements (input, textarea, select, button)
+3. **AI Analysis**: Leverages OpenAI GPT-4 to analyze form patterns and identify security issues
+4. **Security Report**: Provides actionable insights about potential phishing or malicious patterns
 
-## 🔒 Security & Privacy
+## What It Detects
 
-- All web scraping is done through Hyperbrowser's secure infrastructure
-- No sensitive data is stored locally
-- API keys are kept in environment variables
-- Form analysis helps identify potential security vulnerabilities
+- **Phishing Patterns**: Suspicious form behaviors and deceptive practices
+- **Hidden Fields**: Unusual hidden inputs and tracking elements
+- **Security Issues**: Missing CSRF tokens, insecure field configurations
+- **Validation Rules**: Input types, required fields, and constraints
+- **Suspicious Behaviors**: Unusual form submission logic or redirects
 
-## 💡 Use Cases
+## Use Cases
 
-- **Security Auditing**: Identify phishing attempts and suspicious form patterns
-- **Competitive Analysis**: Understand how other websites structure their forms
-- **Development Research**: Learn form best practices from successful sites
-- **QA Testing**: Verify form implementations across different websites
-- **Accessibility Review**: Analyze form field labeling and structure
+- **Security Auditing**: Identify phishing attempts and malicious forms
+- **Competitive Research**: Understand form structures on competitor sites
+- **Development**: Learn form best practices and patterns
+- **QA Testing**: Verify form implementations across different sites
+- **Accessibility**: Analyze form field labeling and structure
 
-## 🚦 Requirements
-
-- Node.js 16 or higher
-- Valid Hyperbrowser API key
-- Valid OpenAI API key
-- Internet connection for API calls
-
-## 🎨 Tech Stack
+## Tech Stack
 
 - **TypeScript** - Type-safe development
-- **Hyperbrowser SDK** - Web scraping and browser automation
-- **OpenAI GPT-4** - AI-powered form analysis
-- **Chalk** - Beautiful terminal colors
-- **Dotenv** - Environment variable management
+- **@hyperbrowser/sdk** - Cloud browser automation
+- **OpenAI GPT-4** - AI-powered security analysis
+- **Chalk** - Terminal styling
+- **Dotenv** - Environment management
 
-## 🆘 Troubleshooting
+## Documentation
 
-**"Cannot find module" errors**: Run `npm install` to install dependencies
+Full API documentation: [docs.hyperbrowser.ai](https://docs.hyperbrowser.ai)
 
-**API key errors**: Make sure your `.env` file is in the project root with valid API keys
-
-**Scraping fails**: Some websites may block automated access - try different URLs
-
-**No forms found**: The website might use dynamic forms loaded with JavaScript
-
----
-
-**Ready to analyze forms like never before?** Get started at [hyperbrowser.ai](https://hyperbrowser.ai) 🚀 
+Follow [@hyperbrowser](https://x.com/hyperbrowser) for updates. 

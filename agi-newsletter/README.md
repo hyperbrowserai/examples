@@ -1,55 +1,48 @@
-# AI Newsletter Automation 🤖📧
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
 
-An automated newsletter system that scrapes the latest AI news from top sources, generates personalized content using OpenAI, and sends customized newsletters to subscribers via email.
+# AI Newsletter Automation
 
-## 🌟 Features
+Automated newsletter system that scrapes the latest AI news from top sources (Anthropic, OpenAI, DeepMind, Hacker News), generates personalized content using OpenAI, and delivers customized newsletters to subscribers via email.
 
-- **Multi-source Scraping**: Automatically scrapes content from major AI news sources
-- **AI-Powered Content Generation**: Uses OpenAI GPT-4 to create engaging newsletter content
-- **Personalized Delivery**: Sends customized newsletters to each subscriber
-- **Email Integration**: Reliable email delivery through Resend API
-- **TypeScript**: Full type safety and modern development experience
+## Features
 
-## 📰 News Sources
+- Multi-source scraping from major AI news sources
+- AI-powered content generation with OpenAI GPT-4
+- Personalized delivery with recipient names
+- Email integration through Resend API
+- TypeScript with full type safety
 
-The system automatically scrapes content from:
+## News Sources
+
 - [Anthropic News](https://www.anthropic.com/news)
 - [OpenAI Blog](https://openai.com/blog)
 - [DeepMind Blog](https://deepmind.com/blog)
 - [Hacker News Front Page](https://news.ycombinator.com/front)
 
-## 🚀 Quick Start
-
-### Prerequisites
+## Prerequisites
 
 - Node.js (v18 or later)
-- npm or yarn package manager
 - API keys for:
-  - Hyperbrowser SDK
-  - OpenAI
-  - Resend
+  - **Hyperbrowser**: Get yours at [hyperbrowser.ai](https://hyperbrowser.ai)
+  - **OpenAI**: Create at [platform.openai.com](https://platform.openai.com)
+  - **Resend**: Sign up at [resend.com](https://resend.com) (domain verification required)
 
-### Installation
+## Quick Start
 
-1. **Clone and navigate to the project:**
-   ```bash
-   cd agi-newsletter
-   ```
-
-2. **Install dependencies:**
+1. **Install dependencies:**
    ```bash
    npm install
    ```
 
-3. **Set up environment variables:**
-   Create a `.env` file in the project root:
+2. **Set up environment variables:**
+   Create a `.env` file:
    ```env
    HYPERBROWSER_API_KEY=your_hyperbrowser_api_key
    OPENAI_API_KEY=your_openai_api_key
    RESEND_API_KEY=your_resend_api_key
    ```
 
-4. **Configure subscribers:**
+3. **Configure subscribers:**
    Edit the `users` array in `trend-newsletter.ts`:
    ```typescript
    const users = [
@@ -58,16 +51,16 @@ The system automatically scrapes content from:
    ];
    ```
 
-5. **Run the newsletter:**
+4. **Run the newsletter:**
    ```bash
    npx ts-node trend-newsletter.ts
    ```
 
-## 🔧 Configuration
+## Configuration
 
-### Adding New News Sources
+### Adding News Sources
 
-To add new sources, modify the `urls` array:
+Modify the `urls` array in `trend-newsletter.ts`:
 
 ```typescript
 const urls = [
@@ -79,15 +72,15 @@ const urls = [
 
 ### Customizing Newsletter Content
 
-Modify the `SYSTEM_PROMPT` to change the newsletter style:
+Adjust the `SYSTEM_PROMPT` to change style and tone:
 
 ```typescript
 const SYSTEM_PROMPT = `Your custom instructions for the AI...`;
 ```
 
-### Email Customization
+### Email Settings
 
-Update the email configuration in the Resend section:
+Update email configuration (requires verified Resend domain):
 
 ```typescript
 const emailResponse = await resend.emails.send({
@@ -98,33 +91,15 @@ const emailResponse = await resend.emails.send({
 });
 ```
 
-## 📋 How It Works
+## How It Works
 
-1. **Web Scraping**: The system uses Hyperbrowser SDK to scrape markdown content from configured news sources
-2. **Content Processing**: All scraped content is combined and processed
-3. **AI Generation**: OpenAI GPT-4 generates a friendly, engaging newsletter from the scraped content
-4. **Personalization**: Each newsletter is personalized with the recipient's name
-5. **Email Delivery**: Newsletters are sent via Resend to all configured subscribers
+1. **Scrape**: Uses Hyperbrowser SDK to scrape markdown content from configured news sources
+2. **Process**: Combines all scraped content into a single markdown document
+3. **Generate**: OpenAI GPT-4 creates a friendly, engaging newsletter from the content
+4. **Personalize**: Each newsletter is customized with the recipient's name
+5. **Deliver**: Sends personalized newsletters via Resend to all subscribers
 
-## 🔑 API Keys Setup
-
-### Hyperbrowser SDK
-1. Visit [Hyperbrowser](https://hyperbrowser.ai)
-2. Sign up and get your API key
-3. Add to `.env` as `HYPERBROWSER_API_KEY`
-
-### OpenAI
-1. Visit [OpenAI Platform](https://platform.openai.com)
-2. Create an API key
-3. Add to `.env` as `OPENAI_API_KEY`
-
-### Resend
-1. Visit [Resend](https://resend.com)
-2. Sign up and verify your domain
-3. Create an API key
-4. Add to `.env` as `RESEND_API_KEY`
-
-## 📊 Output Example
+## Example Output
 
 ```
 🔍 Starting to scrape pages...
@@ -137,47 +112,30 @@ const emailResponse = await resend.emails.send({
 📨 All newsletters generated and sent successfully!
 ```
 
-## 🛠️ Development
+## Code Structure
 
-### Scripts
+**Main file**: `trend-newsletter.ts`
 
-```bash
-# Run the newsletter
-npx ts-node trend-newsletter.ts
+Key components:
+- `urls` - Array of news sources to scrape
+- `users` - Subscriber list with names and emails
+- `SYSTEM_PROMPT` - Instructions for OpenAI newsletter generation
+- `main()` - Orchestrates scraping, generation, and delivery
 
-# Install dependencies
-npm install
-
-# Type checking
-npx tsc --noEmit
-```
-
-### Dependencies
-
-- `@hyperbrowser/sdk` - Web scraping
+**Dependencies**:
+- `@hyperbrowser/sdk` - Web scraping via official SDK
 - `openai` - AI content generation
-- `resend` - Email delivery
+- `resend` - Email delivery service
 - `zod` - Schema validation
-- `dotenv` - Environment variables
+- `dotenv` - Environment variable management
 
-## 🚨 Important Notes
+## Important Notes
 
-- **Rate Limits**: Be mindful of API rate limits for all services
-- **Email Verification**: Ensure your Resend domain is verified before sending
-- **Content Quality**: Monitor generated content for accuracy and tone
-- **Error Handling**: The system includes robust error handling for failed scrapes
-
-## 📝 License
-
-MIT License - Feel free to modify and distribute as needed.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+- Be mindful of API rate limits for all services
+- Resend domain must be verified before sending emails
+- Monitor generated content for accuracy and appropriate tone
+- Includes error handling for failed scrapes and email delivery
 
 ---
 
-**Happy Newslettering!** 🎉
+Follow [@hyperbrowser](https://twitter.com/hyperbrowser) for updates

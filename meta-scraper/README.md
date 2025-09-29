@@ -1,64 +1,53 @@
-# Meta Scraper Tool
+# Meta Scraper
 
-A powerful web scraping tool that extracts and analyzes meta tags from websites using AI. This tool combines Hyperbrowser's web scraping capabilities with OpenAI's GPT-4 to provide comprehensive meta tag analysis and insights.
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
+
+AI-powered meta tag extraction and analysis tool. Scrape any website with Hyperbrowser SDK and analyze meta tags (Open Graph, Twitter Cards, SEO metadata) using GPT-4. Perfect for SEO audits, social media preview generation, and competitive analysis.
 
 ## Features
 
-- 🌐 Interactive URL input via terminal
-- 🔍 Reliable web scraping with Hyperbrowser
-- 🤖 AI-powered meta tag analysis using GPT-4
-- 📊 Structured JSON output with:
-  - Page title and description
-  - Open Graph tags (title, description, image)
-  - Twitter Card information
-  - AI-generated summary and use cases
+- 🌐 **Interactive CLI**: Simple terminal-based URL input
+- 🔍 **Smart Scraping**: Uses Hyperbrowser SDK `scrape.startAndWait()` for reliable extraction
+- 🤖 **AI Analysis**: GPT-4 powered insights on meta tags and site purpose
+- 📊 **Structured Output**: Clean JSON with Open Graph, Twitter Cards, and AI-generated summaries
+- ⚡ **Fast**: 30-second timeout with automatic error handling
 
-## Prerequisites
+## Get an API key
 
-- Node.js (v14 or higher)
-- TypeScript
-- Hyperbrowser API key
-- OpenAI API key
+- Get your key at [https://hyperbrowser.ai](https://hyperbrowser.ai)
+- Get OpenAI key at [https://platform.openai.com](https://platform.openai.com)
 
 ## Setup
 
-1. **Clone or download this project**
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Get your API keys**
-   - Get your Hyperbrowser API key from [hyperbrowser.ai](https://hyperbrowser.ai)
-   - Get your OpenAI API key from OpenAI
-
-4. **Create environment file**
-   Create a `.env` file in the project root:
-   ```env
-   HYPERBROWSER_API_KEY=your_hyperbrowser_api_key_here
-   OPENAI_API_KEY=your_openai_api_key_here
-   ```
-
-## Usage
-
-Run the tool:
 ```bash
-npx ts-node meta-scrapper.ts
+npm install
 ```
 
-The tool will prompt you to enter a URL:
-```
-🌐 Meta Scraper Tool
-Enter a single URL to analyze
-URL: https://example.com
+Create a `.env` file in this folder:
+```bash
+HYPERBROWSER_API_KEY=your_key_here
+OPENAI_API_KEY=your_key_here
 ```
 
-Enter any website URL and the tool will:
-1. Scrape the website content
-2. Extract meta tags
-3. Analyze the content with AI
-4. Return structured JSON results
+## Quick Start
+
+```bash
+# Run the interactive tool
+npx tsx meta-scrapper.ts
+
+# When prompted, enter a URL:
+# URL: https://example.com
+```
+
+## What it does
+
+1. **Scrape**: Uses Hyperbrowser SDK to fetch HTML content
+2. **Extract**: GPT-4 parses meta tags including:
+   - Standard title and description
+   - Open Graph tags (og:title, og:description, og:image)
+   - Twitter Card metadata
+3. **Analyze**: AI generates summary and identifies use cases
+4. **Output**: Returns structured JSON to terminal
 
 ## Example Output
 
@@ -80,19 +69,45 @@ Enter any website URL and the tool will:
 }
 ```
 
-## How It Works
+## Use Cases
 
-1. **Web Scraping**: Uses Hyperbrowser to reliably scrape website content, handling JavaScript-heavy sites
-2. **Meta Extraction**: Extracts various meta tags including standard HTML meta tags and Open Graph properties
-3. **AI Analysis**: Uses GPT-4 to analyze the content and generate insights about the website's purpose and use cases
-4. **Structured Output**: Returns clean, structured JSON data for easy integration with other tools
+- **SEO Audits**: Validate meta tags across multiple pages
+- **Social Media Previews**: Check how links will appear when shared
+- **Competitive Analysis**: Analyze competitor meta strategies
+- **Growth Marketing**: Batch analyze landing page metadata
+- **Content Management**: Verify meta consistency across site
+- **Web Scraping**: Extract structured metadata for datasets
+
+## Architecture
+
+- **`meta-scrapper.ts`**: Main CLI tool with readline interface
+- Uses `@hyperbrowser/sdk` for web scraping
+- Uses `openai` SDK for GPT-4 analysis
+- Automatic JSON extraction with markdown stripping
 
 ## Troubleshooting
 
-- **"No content received from OpenAI"**: Check your OpenAI API key and ensure you have credits
-- **"Failed to scrape [URL]"**: Check your Hyperbrowser API key and ensure the URL is accessible
-- **JSON parsing errors**: The tool automatically handles various response formats from OpenAI
+**"No content received from OpenAI"**
+- Check your OpenAI API key is valid
+- Ensure you have API credits available
 
-## License
+**"Failed to scrape [URL]"**
+- Verify your Hyperbrowser API key
+- Check if URL is accessible and valid
+- Some sites may block automated access
 
-MIT License
+**JSON parsing errors**
+- Tool automatically handles markdown code blocks
+- Falls back to regex extraction if needed
+- Check full error output for debugging
+
+## Notes
+
+- Uses only official Hyperbrowser SDK methods (`@hyperbrowser/sdk`)
+- 30-second scrape timeout for performance
+- GPT-4o model for accurate meta tag extraction
+- Automatically strips markdown formatting from AI responses
+
+---
+
+Follow [@hyperbrowser](https://x.com/hyperbrowser) for updates.

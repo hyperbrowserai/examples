@@ -1,127 +1,102 @@
-# GitHub Repository Chatbot 🤖
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
 
-An intelligent chatbot that scrapes GitHub repositories and answers questions about their content using AI. Simply provide a GitHub repository URL, and the bot will analyze the codebase, documentation, and repository structure to answer your questions.
+# GitHub Repository Chatbot
+
+Chat with any GitHub repository using AI. Ask questions about code, documentation, structure, and more - the bot scrapes the repository and provides intelligent answers in real-time.
+
+## Why Hyperbrowser?
+
+[Hyperbrowser](https://hyperbrowser.ai) is the **Internet for AI** — purpose-built for developers creating AI agents and automating web tasks. Skip the infrastructure headaches and focus on building.
+
+## Quick Start
+
+1. **Get your API key**: https://hyperbrowser.ai
+2. **Install**: `npm install`
+3. **Configure**: Add `HYPERBROWSER_API_KEY` and `OPENAI_API_KEY` to `.env`
+4. **Run**: `npx tsx github-chatbot.ts`
 
 ## Features
 
-- 🔍 **Repository Scraping**: Automatically scrapes GitHub repositories including README files, code structure, and metadata
-- 🤖 **AI-Powered Responses**: Uses OpenAI's GPT-4o-mini to provide intelligent answers about the repository
-- 💬 **Interactive Chat**: Real-time question and answer interface
-- 📊 **Comprehensive Analysis**: Analyzes file structure, documentation, issues, pull requests, and more
-
-## Prerequisites
-
-- Node.js (v16 or higher)
-- npm or yarn
-- OpenAI API key
-- Hyperbrowser API key
-
-## Installation
-
-1. Clone this repository:
-```bash
-git clone <your-repo-url>
-cd github-chatbot
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Set up environment variables:
-Create a `.env` file in the root directory:
-```env
-HYPERBROWSER_API_KEY=your_hyperbrowser_api_key
-OPENAI_API_KEY=your_openai_api_key
-```
-
-## Getting API Keys
-
-### Hyperbrowser API Key
-Get your Hyperbrowser API key at **[hyperbrowser.ai](https://hyperbrowser.ai)**
-
-### OpenAI API Key
-1. Visit [OpenAI's platform](https://platform.openai.com/)
-2. Sign up or log in to your account
-3. Navigate to API Keys section
-4. Create a new API key
+- **Smart GitHub Scraping**: Automatically extracts README files, code structure, language stats, issues, and PRs
+- **Interactive Q&A**: Real-time conversational interface powered by GPT-4o-mini
+- **Comprehensive Analysis**: Understands repository metadata, file organization, commits, and documentation
+- **Clean Formatting**: Simple, readable responses without markdown clutter
 
 ## Usage
 
-1. Compile the TypeScript code:
 ```bash
-npx tsc
-```
+# Run the chatbot
+npx tsx github-chatbot.ts
 
-2. Run the chatbot:
-```bash
-node github-chatbot.js
-```
-
-3. Follow the prompts:
-   - Enter a GitHub repository URL when prompted
-   - Wait for the repository to be scraped and analyzed
-   - Start asking questions about the repository!
-
-### Example Usage
-
-```
+# Enter any GitHub repository URL
 🔗 Enter GitHub repository URL: https://github.com/microsoft/vscode
-🔎 Scraping GitHub repository: https://github.com/microsoft/vscode
-🤖 Ready to chat about this repository!
 
+# Ask questions about the repository
 💬 Ask a question (or type 'exit' to quit): What is this repository about?
-🤖 This is the Visual Studio Code repository, a free and open-source code editor developed by Microsoft...
+🤖 This is the Visual Studio Code repository, a free and open-source code editor...
 
 💬 Ask a question (or type 'exit' to quit): What programming languages are used?
-🤖 The repository primarily uses TypeScript (78.2%), JavaScript (12.1%), CSS (4.8%)...
+🤖 The repository primarily uses TypeScript (78.2%), JavaScript (12.1%)...
 ```
 
 ## What Can You Ask?
 
 The chatbot can answer questions about:
-- Repository purpose and description
-- Programming languages used
-- File structure and organization
-- Recent commits and changes
-- Issues and pull requests
-- Documentation content
+- Repository purpose and main features
+- Programming languages and technology stack
+- File structure and code organization
+- Recent commits and development activity
+- Open issues and pull requests
 - Installation and setup instructions
-- Code functionality and features
+- Documentation and usage guidelines
+- Contributors and project history
 
-## Technical Details
+## Environment Variables
 
-- **Web Scraping**: Uses Hyperbrowser SDK for intelligent GitHub scraping
-- **AI Processing**: Leverages OpenAI's GPT-4o-mini for natural language processing
-- **Data Extraction**: Focuses on markdown content, file structures, and repository metadata
-- **Interactive Interface**: Built with readline-sync for seamless command-line interaction
+Create a `.env` file:
+
+```env
+HYPERBROWSER_API_KEY=your_hyperbrowser_api_key
+OPENAI_API_KEY=your_openai_api_key
+```
+
+## How It Works
+
+1. **Scraping**: Uses Hyperbrowser SDK to scrape GitHub pages with targeted selectors for README, file tree, language stats, commits, issues, and PRs
+2. **Processing**: Converts scraped HTML to clean markdown format
+3. **AI Analysis**: Sends markdown content + your question to OpenAI GPT-4o-mini
+4. **Response**: Returns formatted, contextual answers based on repository content
+
+## Technical Stack
+
+- **[@hyperbrowser/sdk](https://www.npmjs.com/package/@hyperbrowser/sdk)**: Web scraping and automation
+- **OpenAI GPT-4o-mini**: Natural language processing
+- **readline-sync**: Interactive CLI interface
+- **TypeScript**: Type-safe development
 
 ## Limitations
 
-- Requires valid API keys for both Hyperbrowser and OpenAI
-- Scraping large repositories may take some time
-- Responses are based on publicly available repository information
-- Rate limits may apply based on your API plan
+- Works with public GitHub repositories only
+- Large repositories may take longer to scrape
+- Response quality depends on scraped content completeness
+- Rate limits apply based on your API plans
 
 ## Troubleshooting
 
-**Scraping failed error**: 
-- Ensure the GitHub URL is valid and publicly accessible
-- Check your Hyperbrowser API key is correct
+**Scraping failed error**:
+- Verify the GitHub URL is valid and publicly accessible
+- Check your `HYPERBROWSER_API_KEY` is correct
 
 **OpenAI errors**:
-- Verify your OpenAI API key is valid
-- Ensure you have sufficient API credits
+- Ensure `OPENAI_API_KEY` is valid and has credits
+- Check your API quota limits
 
-**TypeScript compilation errors**:
-- Run `npm install` to ensure all dependencies are installed
-- Check that you're using Node.js v16 or higher
+**Installation issues**:
+- Use Node.js v16 or higher
+- Run `npm install` to install all dependencies
 
-## Contributing
+---
 
-Feel free to submit issues, feature requests, or pull requests to improve this chatbot!
+**Perfect for**: Understanding new codebases, researching open-source projects, analyzing repository activity, automated code exploration.
 
-## License
-
-This project is licensed under the ISC License.
+🚀 **Scale your AI development** with [Hyperbrowser](https://hyperbrowser.ai) | Follow @hyperbrowser

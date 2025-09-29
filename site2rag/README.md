@@ -1,81 +1,55 @@
-# Site2RAG
+**Built with [Hyperbrowser](https://hyperbrowser.ai)**
 
-A CLI tool that uses **Hyperbrowser** to scrape webpage content, automatically cleans boilerplate, and outputs token-budgeted chunks ready for RAG or embedding pipelines.
+# site2rag
+
+Transform any webpage into RAG-ready chunks. Scrape, clean, and intelligently chunk web content for embedding pipelines and vector databases.
+
+## Why Hyperbrowser?
+
+[Hyperbrowser](https://hyperbrowser.ai) is the **Internet for AI** — purpose-built for developers creating AI agents and automating web tasks. Skip the infrastructure headaches and focus on building.
+
+## Quick Start
+
+1. **Get your API key**: https://hyperbrowser.ai
+2. **Install**: `npm install`
+3. **Configure**: Add `HYPERBROWSER_API_KEY` to `.env`
+4. **Run**: `npx ts-node index.ts --url https://example.com`
 
 ## Features
 
-- 🌐 **Hyperbrowser Integration**: Uses Hyperbrowser's powerful browser automation for reliable scraping
-- 🔍 **Web Scraping**: Fetches rendered HTML from any webpage with anti-bot protection bypass
-- 🧹 **Content Cleaning**: Automatically removes boilerplate (nav, header, footer, scripts)
-- ✂️ **Smart Chunking**: Splits content into token-budgeted chunks (configurable)
-- 📊 **Multiple Output Formats**: JSON, Markdown, or human-readable summary
-- 🎯 **RAG-Ready**: Perfect for ingestion into embedding pipelines
-
-## Prerequisites
-
-1. **Hyperbrowser Account**: Sign up at [hyperbrowser.ai](https://hyperbrowser.ai/) to get your API key
-2. **Node.js**: Version 16 or higher
-
-## Setup
-
-### 1. Install Dependencies
-
-```bash
-npm install
-```
-
-### 2. Configure API Key
-
-Get your Hyperbrowser API key from [hyperbrowser.ai](https://hyperbrowser.ai/) and set it as an environment variable:
-
-```bash
-# Create a .env file
-echo "HYPERBROWSER_API_KEY=your_api_key_here" > .env
-```
-
-Or export it directly:
-
-```bash
-export HYPERBROWSER_API_KEY=your_api_key_here
-```
+✨ **Powered by Hyperbrowser SDK** for reliable web scraping
+🧹 **Auto-cleanup** removes navigation, headers, and boilerplate
+✂️ **Smart chunking** with configurable token budgets
+📊 **Multiple output formats**: JSON, Markdown, or summary
+🎯 **RAG-optimized** chunks ready for embeddings
 
 ## Usage
 
-### Basic Usage
-
 ```bash
+# Basic scraping with summary
 npx ts-node index.ts --url https://example.com
-```
 
-### Command Line Options
-
-- `--url, -u`: **Required.** URL to scrape
-- `--json`: Output chunks in JSON format for programmatic use
-- `--md`: Output chunks in Markdown format with headers and source citations
-- `--maxTokens`: Maximum tokens per chunk (default: 1000)
-
-### Examples
-
-**Basic scraping with summary:**
-```bash
-npx ts-node index.ts --url https://blog.example.com
-```
-
-**JSON output for API integration:**
-```bash
+# JSON output for RAG pipelines
 npx ts-node index.ts --url https://docs.example.com --json --maxTokens 500
+
+# Markdown format with citations
+npx ts-node index.ts --url https://blog.example.com --md --maxTokens 1500
 ```
 
-**Markdown output for documentation:**
-```bash
-npx ts-node index.ts --url https://news.example.com --md --maxTokens 1500
-```
+### CLI Options
+
+| Option | Alias | Description | Default |
+|--------|-------|-------------|---------|
+| `--url` | `-u` | URL to scrape (required) | - |
+| `--json` | - | Output as JSON for API integration | false |
+| `--md` | - | Output as Markdown with citations | false |
+| `--maxTokens` | - | Maximum tokens per chunk | 1000 |
+
+**Perfect for**: Building RAG applications, creating vector database content, embedding pipelines, AI knowledge bases.
 
 ## Output Formats
 
 ### JSON Format
-Perfect for API integrations and automated workflows:
-
 ```json
 {
   "source": "https://example.com",
@@ -92,8 +66,6 @@ Perfect for API integrations and automated workflows:
 ```
 
 ### Markdown Format
-Great for documentation and human-readable output:
-
 ```markdown
 # Context Pack for https://example.com
 
@@ -105,8 +77,6 @@ Main content chunk...
 ```
 
 ### Summary Format (Default)
-Quick overview of extracted chunks:
-
 ```
 Context Chunks
 ───────────────────────────
@@ -117,35 +87,31 @@ Chunk 3 — 492 tokens
 Run with --md or --json for full output
 ```
 
-## Powered by Hyperbrowser
+## How It Works
 
-This tool leverages [Hyperbrowser](https://hyperbrowser.ai/), a powerful browser automation platform that provides:
+1. **Scrape**: Hyperbrowser fetches fully-rendered HTML (handles JavaScript, anti-bot protection)
+2. **Clean**: Removes navigation, headers, footers, scripts, and boilerplate
+3. **Parse**: Extracts paragraphs and filters noise (minimum 50 characters)
+4. **Chunk**: Intelligently splits content by token budget while preserving context
+5. **Output**: Formats chunks for your pipeline (JSON/Markdown/Summary)
 
-- **Rendered Content**: Gets fully rendered HTML including JavaScript-generated content
-- **Anti-Bot Bypass**: Handles modern anti-scraping measures automatically
-- **Reliable Scraping**: Built-in retries and error handling
-- **Scalable**: Can handle high-volume scraping needs
+## Environment Setup
 
-## Use Cases
+```bash
+# Create .env file
+echo "HYPERBROWSER_API_KEY=your_api_key_here" > .env
 
-- **RAG Pipelines**: Generate embedding-ready content chunks
-- **Content Analysis**: Extract and analyze web content at scale
-- **Documentation**: Convert web content to structured markdown
-- **Data Integration**: JSON output for seamless API integration
-- **Research**: Gather and organize web content for analysis
+# Or export directly
+export HYPERBROWSER_API_KEY=your_api_key_here
+```
 
 ## Development
 
-### Build
 ```bash
-npm run build
+npm run build    # Compile TypeScript
+npm start        # Run with default options
 ```
 
-### Test
-```bash
-npm start -- --url https://example.com
-```
+---
 
-## License
-
-ISC 
+🚀 **Scale your AI development** with [Hyperbrowser](https://hyperbrowser.ai) | Follow @hyperbrowser 

@@ -1,191 +1,106 @@
-# HB-Predict: Tech Signal Detection & Prediction CLI
-
 **Built with [Hyperbrowser](https://hyperbrowser.ai)**
 
-A powerful TypeScript CLI that detects emerging tech signals from live web sources (Hacker News + Reddit), scores them using sophisticated algorithms, clusters near-duplicates, and generates human-ready predictions powered by Hyperbrowser's web extraction capabilities.
+# hb-predict
 
-## 🚀 Quick Start
+Tech signal detection and prediction CLI. Scrapes Hacker News and Reddit to identify emerging tech trends, scores them using sophisticated algorithms, and generates AI-powered predictions.
 
-### 1. Get an API Key
-Get your Hyperbrowser API key at https://hyperbrowser.ai
+## Why Hyperbrowser?
 
-### 2. Environment Setup
+[Hyperbrowser](https://hyperbrowser.ai) is the **Internet for AI** — purpose-built for developers creating AI agents and automating web tasks. Skip the infrastructure headaches and focus on building.
+
+## Quick Start
+
+1. **Get your API key**: https://hyperbrowser.ai
+2. **Install**: `npm install`
+3. **Configure**: Add `HYPERBROWSER_API_KEY` to `.env` (optional: `OPENAI_API_KEY` for AI predictions)
+4. **Run**: `npm run dev`
+
+## Usage
+
 ```bash
-# Required
-export HYPERBROWSER_API_KEY="your_api_key_here"
-
-# Optional (for LLM-powered predictions)
-export OPENAI_API_KEY="your_openai_key_here"
-```
-
-### 3. Install Dependencies
-```bash
-npm install
-```
-
-### 4. Run Analysis
-```bash
-# Basic AI mode analysis
+# Basic AI mode analysis (default)
 npm run dev
 
-# Custom analysis
-npm start -- --mode ai --subs r/MachineLearning,r/LocalLLaMA --window 24h --top 10
+# Custom analysis with specific subreddits
+npx ts-node hb-predict.ts --mode ai --subs r/MachineLearning,r/LocalLLaMA
 
-# Advanced usage
-npx ts-node hb-predict.ts --sources hn,reddit --mode devtools --window 48h --top 15 --out ./results
+# Different mode presets
+npx ts-node hb-predict.ts --mode crypto --window 48h --top 15
+
+# Custom output directory
+npx ts-node hb-predict.ts --mode devtools --out ./results
 ```
 
-## 📊 Features
+## Features
 
-### Multi-Source Data Collection
-- **Hacker News**: Front page + newest posts with points, comments, and metadata
-- **Reddit**: Configurable subreddits with upvotes, comments, and author data
-- **Hyperbrowser-First**: Uses official Hyperbrowser SDK for all web extraction
+✨ **Multi-source scraping** with Hyperbrowser SDK (Hacker News + Reddit)
+🎯 **Intelligent scoring** using velocity, cross-source, and impact signals
+🧠 **Smart clustering** with similarity detection and keyword extraction
+🤖 **AI-powered predictions** via OpenAI (with heuristic fallback)
+📊 **Multiple outputs**: Markdown reports, JSONL events, JSON clusters
 
-### Intelligent Scoring System
-- **Velocity**: Z-score based momentum calculation per source
-- **Cross-Source**: Bonus for topics appearing across multiple platforms
-- **Authority**: Reputation scoring for domains and authors
-- **Novelty**: Penalizes similar content from recent history
-- **Impact Hints**: Detects launch/funding/acquisition keywords
-
-### Smart Clustering
-- TF-IDF cosine similarity for grouping related events
-- Automatic keyword extraction and deduplication
-- Configurable similarity thresholds
-
-### AI-Powered Predictions
-- OpenAI integration for nuanced trend analysis
-- Heuristic fallback when API unavailable
-- Confidence scoring and citation generation
-
-## 🎯 CLI Options
+## CLI Options
 
 ```bash
 npx ts-node hb-predict.ts [OPTIONS]
 
 Options:
-  --sources hn,reddit,github,ph,arxiv    # Data sources (default: hn,reddit)
-  --subs r/MachineLearning,r/LocalLLaMA  # Subreddits to scan
   --mode ai|crypto|devtools|fintech      # Preset configurations (default: ai)
-  --window 24h                           # Time window: hours(h), days(d), minutes(m)
+  --subs r/MachineLearning,r/LocalLLaMA  # Custom subreddits to scan
+  --window 24h                           # Time window (format: 24h, 48h, etc.)
   --top 10                               # Number of predictions (default: 10)
   --out ./oracle                         # Output directory (default: ./oracle)
-  --watch                                # Continuous monitoring (5min intervals)
-  --min-karma 30                         # Min Reddit user karma (default: 30)
-  --min-points 20                        # Min HN points threshold (default: 20)
 ```
 
 ### Mode Presets
-- **ai**: r/MachineLearning, r/LocalLLaMA, r/artificial, r/singularity, r/ChatGPT
-- **crypto**: r/CryptoCurrency, r/bitcoin, r/ethereum, r/DeFi, r/NFT
-- **devtools**: r/programming, r/webdev, r/javascript, r/rust, r/golang  
-- **fintech**: r/fintech, r/investing, r/SecurityAnalysis, r/startups
+- **ai**: r/MachineLearning, r/LocalLLaMA, r/artificial
+- **crypto**: r/CryptoCurrency, r/bitcoin, r/ethereum
+- **devtools**: r/programming, r/webdev, r/javascript
+- **fintech**: r/fintech, r/investing, r/startups
 
-## 📁 Output Files
+## Output Files
 
-### 1. `predictions.md` - Human-Ready Report
-```markdown
-# Tech Signal Predictions
+The tool generates three output files in the specified directory (default: `./oracle/`):
 
-## 1. New LLM framework gaining enterprise adoption (confidence: HIGH)
-- Multiple discussions across HN and r/MachineLearning about production deployment
-- Based on 8 signals across hn, reddit
-- Keywords: framework, enterprise, deployment, scaling, production
+### `predictions.md` - Human-Ready Report
+Markdown file with ranked predictions, confidence scores, and citations.
 
-**Citations:**
-- [Company X releases enterprise LLM toolkit](https://news.ycombinator.com/item?id=123)
-- [New framework simplifies LLM deployment](https://reddit.com/r/MachineLearning/...)
-```
+### `events.jsonl` - Raw Scored Events
+JSONL file with all scraped events and their computed scores.
 
-### 2. `events.jsonl` - Raw Scored Events
-```json
-{"id":"abc123","source":"hn","title":"Revolutionary AI Framework Released","url":"https://example.com","points":245,"score":0.87,"created_at":"2024-01-15T10:30:00Z"}
-{"id":"def456","source":"reddit","title":"Game-changing ML tool","url":"https://reddit.com/r/ML/...","points":156,"score":0.76,"subreddit":"MachineLearning"}
-```
+### `clusters.json` - Grouped Analysis
+JSON file with clustered events, keywords, and predictions.
 
-### 3. `clusters.json` - Grouped Analysis
-```json
-[
-  {
-    "id": "cluster-1",
-    "title_hint": "Revolutionary AI Framework Released",
-    "events": [...],
-    "max_score": 0.87,
-    "keywords": ["framework", "ai", "released"],
-    "prediction": {
-      "claim": "AI framework adoption accelerating in enterprise",
-      "confidence": "high",
-      "citations": [...]
-    }
-  }
-]
-```
+## How It Works
 
-## 🎯 Growth Use Case
-
-Perfect for:
-- **Tech VCs**: Spot emerging investment opportunities before they peak
-- **Product Teams**: Identify trending technologies for roadmap planning  
-- **Market Research**: Track competitor launches and industry movements
-- **Content Creators**: Generate data-driven content about tech trends
-- **Developers**: Stay ahead of the curve on new tools and frameworks
-
-## 🔧 Technical Implementation
+1. **Scrape**: Fetches latest posts from Hacker News and configured Reddit subreddits using Hyperbrowser SDK
+2. **Score**: Calculates signal strength based on points, impact keywords, and cross-platform mentions
+3. **Cluster**: Groups similar events using text similarity (70%+ word overlap)
+4. **Predict**: Generates predictions using OpenAI (if available) or heuristic fallback
+5. **Export**: Outputs markdown reports, JSONL events, and JSON clusters
 
 ### Scoring Algorithm
-```
-Final Score = 0.35×Velocity + 0.25×CrossSource + 0.20×Authority + 0.10×Novelty + 0.10×ImpactHints
-```
+- **Base Score**: Normalized points (capped at 100)
+- **Impact Bonus**: +0.3 for keywords like "launch", "funding", "released"
+- **Cross-Source Bonus**: +0.2 when same domain appears on multiple platforms
 
-- **Velocity**: Z-score of points/hour within source bucket
-- **CrossSource**: +0.5 for cross-platform mentions within 48h
-- **Authority**: +0.25 for reputable domains, +0.15 for high-karma authors
-- **Novelty**: Cosine similarity penalty vs last 14 days
-- **ImpactHints**: +0.2 for launch/funding/acquisition keywords
-
-### Rate Limiting & Ethics
-- Staggered API calls with 1s delays
-- Respects robots.txt and platform guidelines
-- Configurable thresholds to avoid spam/low-quality content
-
-## 🚦 Examples
+## Examples
 
 ```bash
 # Monitor AI trends with 48h lookback
 npx ts-node hb-predict.ts --mode ai --window 48h --top 15
 
-# Track crypto markets with custom subreddits  
-npx ts-node hb-predict.ts --mode crypto --subs r/CryptoCurrency,r/ethereum --window 12h
+# Track crypto markets
+npx ts-node hb-predict.ts --mode crypto --window 12h
 
-# Continuous monitoring for devtools
-npx ts-node hb-predict.ts --mode devtools --watch --out ./monitoring
-
-# High-signal only analysis
-npx ts-node hb-predict.ts --min-points 50 --min-karma 100 --top 5
+# Custom subreddit analysis
+npx ts-node hb-predict.ts --subs r/rust,r/golang --top 5
 ```
 
-## 🛠 Development
+## Use Cases
 
-```bash
-# Install dependencies
-npm install
-
-# Run with development settings
-npm run dev
-
-# Manual execution
-npx ts-node hb-predict.ts --help
-```
-
-## 📈 Future Enhancements
-
-- GitHub stars delta tracking
-- Product Hunt integration  
-- Slack webhook notifications
-- Historical trend analysis
-- Custom domain authority scoring
+**Perfect for**: Tech VCs spotting investment opportunities, product teams tracking trends, market researchers monitoring competitors, content creators finding data-driven topics, and developers staying ahead of the curve.
 
 ---
 
-Follow @hyperbrowser for updates.
+🚀 **Scale your AI development** with [Hyperbrowser](https://hyperbrowser.ai) | Follow @hyperbrowser

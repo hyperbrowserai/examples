@@ -4,9 +4,13 @@
 
 A powerful single-file TypeScript CLI tool that uses Hyperbrowser's official SDK to scrape URLs and create LLM-ready training datasets. Perfect for building custom datasets for fine-tuning language models.
 
-## 🚀 Features
+## Why Hyperbrowser?
 
-- **Official Hyperbrowser SDK** - Uses the official @hyperbrowser/sdk for reliable web scraping
+[Hyperbrowser](https://hyperbrowser.ai) is the **Internet for AI** — purpose-built for developers creating AI agents and automating web tasks. Skip the infrastructure headaches and focus on building.
+
+## Features
+
+- **Official Hyperbrowser SDK** - Uses the official `@hyperbrowser/sdk` for reliable web scraping
 - **Multiple Output Formats** - Generate JSONL and Markdown datasets
 - **Smart Chunking** - Paragraph-aware text splitting with configurable chunk sizes
 - **Embeddings Generation** - Optional OpenAI embeddings for semantic search
@@ -15,7 +19,7 @@ A powerful single-file TypeScript CLI tool that uses Hyperbrowser's official SDK
 - **Streaming Writes** - Memory-efficient handling of large datasets
 - **Progress Logging** - Clear feedback during dataset creation
 
-## 📦 Installation
+## Installation
 
 1. **Get an API key** from [https://hyperbrowser.ai](https://hyperbrowser.ai)
 
@@ -30,7 +34,7 @@ export HYPERBROWSER_API_KEY="your_hyperbrowser_api_key"
 export OPENAI_API_KEY="your_openai_api_key"  # Only needed for --embed or --qa
 ```
 
-## 🏃‍♂️ Quick Start
+## Quick Start
 
 1. Create a file with URLs (one per line):
 ```bash
@@ -47,7 +51,7 @@ ts-node hypertrain.ts --input urls.txt
 ts-node hypertrain.ts --input urls.txt --out ./dataset --format jsonl,md --embed --qa 2 --tag "training-data"
 ```
 
-## 🔧 Usage
+## Usage
 
 ```
 ts-node hypertrain.ts [options]
@@ -65,7 +69,7 @@ Options:
   --help, -h            Show help message
 ```
 
-## 📊 Output Formats
+## Output Formats
 
 ### JSONL Dataset (`dataset.jsonl`)
 ```json
@@ -105,19 +109,19 @@ Options:
 ### Markdown Output
 Individual `.md` files per scraped page with structured content and metadata.
 
-## 🎯 Use Cases
+## Use Cases
 
 - **Fine-tuning Models** - Create custom training datasets for domain-specific models
 - **Knowledge Base Creation** - Build searchable knowledge bases with embeddings
 - **Content Analysis** - Generate structured datasets for content research
 - **QA System Training** - Create question-answer pairs for chatbot training
 
-## 🔐 Environment Variables
+## Environment Variables
 
 - `HYPERBROWSER_API_KEY` - Your Hyperbrowser API key (required)
 - `OPENAI_API_KEY` - Your OpenAI API key (required for --embed or --qa)
 
-## 📋 Examples
+## Examples
 
 ### Basic Dataset Creation
 ```bash
@@ -147,7 +151,7 @@ ts-node hypertrain.ts \
 ts-node hypertrain.ts --input urls.txt --qa 2 --finetune openai
 ```
 
-## 🛠️ Development
+## Development
 
 Run with TypeScript directly:
 ```bash
@@ -160,10 +164,26 @@ npm run build
 node hypertrain.js --input urls.txt
 ```
 
-## 📄 License
+## Architecture
+
+This is a single-file TypeScript CLI tool with the following structure:
+
+- **`hypertrain.ts`** - Main CLI tool with HyperTrain class
+  - URL scraping using Hyperbrowser SDK
+  - Smart paragraph-aware text chunking
+  - OpenAI embeddings generation
+  - QA pair generation with GPT-3.5
+  - Multiple output format support (JSONL, Markdown)
+  - Concurrent processing for performance
+
+- **`test-urls.txt`** - Sample URL list for testing
+- **`package.json`** - Dependencies and scripts
+- **`tsconfig.json`** - TypeScript configuration
+
+## License
 
 ISC
 
 ---
 
-Follow [@hyperbrowser](https://x.com/hyperbrowser) for updates.
+Built with [Hyperbrowser](https://hyperbrowser.ai) | Follow [@hyperbrowser](https://x.com/hyperbrowser) for updates
