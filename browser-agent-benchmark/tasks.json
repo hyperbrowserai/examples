@@ -1,0 +1,172 @@
+{
+  "tasks": [
+    {
+      "id": "read-example-heading",
+      "category": "read",
+      "startUrl": "https://example.com",
+      "instruction": "Extract the main heading text of this page.",
+      "passCondition": { "type": "answerContains", "value": "Example Domain" }
+    },
+    {
+      "id": "read-everest-elevation",
+      "category": "read",
+      "startUrl": "https://en.wikipedia.org/wiki/Mount_Everest",
+      "instruction": "Find the summit elevation of Mount Everest in metres and report it.",
+      "passCondition": { "type": "answerContains", "value": "8,848.86" }
+    },
+    {
+      "id": "read-array-flat-return",
+      "category": "read",
+      "startUrl": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat",
+      "instruction": "According to this documentation page, what does the Array.prototype.flat() method return? Answer in a short phrase.",
+      "passCondition": { "type": "answerContains", "value": "new array" }
+    },
+    {
+      "id": "read-teapot-status",
+      "category": "read",
+      "startUrl": "https://www.rfc-editor.org/rfc/rfc2324",
+      "instruction": "What HTTP status code does this protocol specify when a teapot is asked to brew coffee? Report the number.",
+      "passCondition": { "type": "answerContains", "value": "418" }
+    },
+    {
+      "id": "read-gutenberg-pride-author",
+      "category": "read",
+      "startUrl": "https://www.gutenberg.org/ebooks/1342",
+      "instruction": "Who is the author of the book on this page? Report the author's name.",
+      "passCondition": { "type": "answerContains", "value": "Jane Austen" }
+    },
+    {
+      "id": "read-speed-of-light",
+      "category": "read",
+      "startUrl": "https://en.wikipedia.org/wiki/Speed_of_light",
+      "instruction": "What is the exact value of the speed of light in metres per second, as stated on this page? Report the number.",
+      "passCondition": { "type": "answerContains", "value": "299792458" }
+    },
+    {
+      "id": "read-http-404-phrase",
+      "category": "read",
+      "startUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "instruction": "What is the standard reason phrase for the HTTP 404 status code? Report the phrase.",
+      "passCondition": { "type": "answerContains", "value": "Not Found" }
+    },
+    {
+      "id": "read-gutenberg-frankenstein-author",
+      "category": "read",
+      "startUrl": "https://www.gutenberg.org/ebooks/84",
+      "instruction": "Who is the author of the book on this page? Report the author's name.",
+      "passCondition": { "type": "answerContains", "value": "Shelley" }
+    },
+    {
+      "id": "navigate-wiki-www",
+      "category": "navigate",
+      "startUrl": "https://en.wikipedia.org/wiki/Web_browser",
+      "instruction": "Navigate to the Wikipedia article titled 'World Wide Web'.",
+      "passCondition": { "type": "urlReached", "value": "https://en.wikipedia.org/wiki/World_Wide_Web" }
+    },
+    {
+      "id": "navigate-python-guido",
+      "category": "navigate",
+      "startUrl": "https://en.wikipedia.org/wiki/Python_(programming_language)",
+      "instruction": "From this article, navigate to the Wikipedia article about the person who created Python.",
+      "passCondition": { "type": "urlReached", "value": "https://en.wikipedia.org/wiki/Guido_van_Rossum" }
+    },
+    {
+      "id": "navigate-mdn-string-split",
+      "category": "navigate",
+      "startUrl": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+      "instruction": "Navigate to the documentation page for the String method that divides a string into an ordered list of substrings (the 'split' method).",
+      "passCondition": { "type": "urlReached", "value": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split" }
+    },
+    {
+      "id": "navigate-python-json",
+      "category": "navigate",
+      "startUrl": "https://docs.python.org/3/library/index.html",
+      "instruction": "From the Python standard library index, navigate to the documentation page for the JSON encoder and decoder module.",
+      "passCondition": { "type": "urlReached", "value": "https://docs.python.org/3/library/json.html" }
+    },
+    {
+      "id": "navigate-turing-cs",
+      "category": "navigate",
+      "startUrl": "https://en.wikipedia.org/wiki/Alan_Turing",
+      "instruction": "From this article, navigate to the Wikipedia article for the academic field 'Computer science'.",
+      "passCondition": { "type": "urlReached", "value": "https://en.wikipedia.org/wiki/Computer_science" }
+    },
+    {
+      "id": "navigate-js-eich",
+      "category": "navigate",
+      "startUrl": "https://en.wikipedia.org/wiki/JavaScript",
+      "instruction": "From this article, navigate to the Wikipedia article about the person who created JavaScript.",
+      "passCondition": { "type": "urlReached", "value": "https://en.wikipedia.org/wiki/Brendan_Eich" }
+    },
+    {
+      "id": "write-httpbin-form",
+      "category": "write",
+      "startUrl": "https://httpbin.org/forms/post",
+      "instruction": "Fill in the customer name field with 'Test User' and submit the order form.",
+      "passCondition": { "type": "urlReached", "value": "https://httpbin.org/post" }
+    },
+    {
+      "id": "write-herokuapp-login",
+      "category": "write",
+      "startUrl": "https://the-internet.herokuapp.com/login",
+      "instruction": "Log in using the username 'tomsmith' and the password 'SuperSecretPassword!'.",
+      "passCondition": { "type": "elementExists", "selector": ".flash.success" }
+    },
+    {
+      "id": "write-herokuapp-checkboxes",
+      "category": "write",
+      "startUrl": "https://the-internet.herokuapp.com/checkboxes",
+      "instruction": "Ensure both checkboxes on this page are checked.",
+      "passCondition": { "type": "elementExists", "selector": "#checkboxes input:checked" }
+    },
+    {
+      "id": "write-herokuapp-dropdown",
+      "category": "write",
+      "startUrl": "https://the-internet.herokuapp.com/dropdown",
+      "instruction": "Select the option labelled 'Option 2' from the dropdown menu.",
+      "passCondition": { "type": "elementExists", "selector": "#dropdown option[value=\"2\"]:checked" }
+    },
+    {
+      "id": "write-saucedemo-cart",
+      "category": "write",
+      "startUrl": "https://www.saucedemo.com/",
+      "instruction": "Log in with the username 'standard_user' and the password 'secret_sauce', then add any one product to the shopping cart.",
+      "passCondition": { "type": "elementExists", "selector": ".shopping_cart_badge" }
+    },
+    {
+      "id": "write-duckduckgo-search",
+      "category": "write",
+      "startUrl": "https://duckduckgo.com/",
+      "instruction": "Search for the term 'hyperbrowser' and reach the search results page.",
+      "passCondition": { "type": "elementExists", "selector": "[data-testid=\"result\"]" }
+    },
+    {
+      "id": "bot-protected-scrapingcourse",
+      "category": "bot_protected",
+      "startUrl": "https://www.scrapingcourse.com/antibot-challenge",
+      "instruction": "This page shows an anti-bot challenge page if blocked, or a success page if the challenge was passed. Extract the main heading text of whatever page is shown.",
+      "passCondition": { "type": "answerContains", "value": "bypass" }
+    },
+    {
+      "id": "bot-cloudflare-challenge",
+      "category": "bot_protected",
+      "startUrl": "https://www.scrapingcourse.com/cloudflare-challenge",
+      "instruction": "Extract the main heading text shown on this page.",
+      "passCondition": { "type": "answerContains", "value": "bypass" }
+    },
+    {
+      "id": "bot-patreon-home",
+      "category": "bot_protected",
+      "startUrl": "https://www.patreon.com/",
+      "instruction": "Extract the main heading text shown on this page.",
+      "passCondition": { "type": "answerContains", "value": "creators" }
+    },
+    {
+      "id": "bot-expedia-home",
+      "category": "bot_protected",
+      "startUrl": "https://www.expedia.com/",
+      "instruction": "Extract the main heading text shown on this page.",
+      "passCondition": { "type": "answerContains", "value": "trip" }
+    }
+  ]
+}
