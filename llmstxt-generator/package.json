@@ -1,0 +1,21 @@
+{
+  "name": "llmstxt-generator",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/cli-progress": "^3.11.6"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@hyperbrowser/sdk": "^0.61.0",
+    "cli-progress": "^3.12.0",
+    "commander": "^14.0.1",
+    "inquirer": "^12.9.6",
+    "openai": "^5.22.0",
+    "ora": "5.4.1"
+  }
+}
