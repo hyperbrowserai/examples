@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Documentation](https://img.shields.io/badge/docs-docs.hyperbrowser.ai-00C389)](https://docs.hyperbrowser.ai)
+[![Documentation](https://img.shields.io/badge/docs-hyperbrowser.ai%2Fdocs-00C389)](https://www.hyperbrowser.ai/docs)
 [![Discord](https://img.shields.io/badge/Discord-join-5865F2?logo=discord&logoColor=white)](https://discord.gg/zsYzsgVRjh)
 
 Official examples, Jupyter notebooks, coding-agent skills, and HyperAgent task templates for [Hyperbrowser](https://www.hyperbrowser.ai) — cloud browsers and web infrastructure for AI agents and automation.
@@ -35,7 +35,7 @@ Use it when you need a real browser in the cloud — JavaScript-rendered pages, 
 
 - **Product:** [hyperbrowser.ai](https://www.hyperbrowser.ai)
 - **Dashboard / API keys:** [app.hyperbrowser.ai](https://app.hyperbrowser.ai)
-- **Docs:** [docs.hyperbrowser.ai](https://docs.hyperbrowser.ai)
+- **Docs:** [hyperbrowser.ai/docs](https://www.hyperbrowser.ai/docs)
 - **Node SDK:** [`@hyperbrowser/sdk`](https://www.npmjs.com/package/@hyperbrowser/sdk)
 - **Python SDK:** [`hyperbrowser`](https://pypi.org/project/hyperbrowser/)
 
@@ -318,7 +318,7 @@ Please follow the site's terms of service and robots rules for any URL an exampl
 
 ## Support
 
-- Documentation: [docs.hyperbrowser.ai](https://docs.hyperbrowser.ai)
+- Documentation: [hyperbrowser.ai/docs](https://www.hyperbrowser.ai/docs)
 - Discord: [discord.gg/zsYzsgVRjh](https://discord.gg/zsYzsgVRjh)
 - Email: [info@hyperbrowser.ai](mailto:info@hyperbrowser.ai)
 - Issues: [github.com/hyperbrowserai/examples/issues](https://github.com/hyperbrowserai/examples/issues)
